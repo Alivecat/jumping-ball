@@ -12,7 +12,7 @@ public class EnemyFly : MonoBehaviour {
 	void Start(){
 		player = GameObject.Find("Player");
         eye = GameObject.Find("eye");
-        dieTime = 5f;
+        dieTime = 6f;
         StartCoroutine (EnemyDie());
 	}
 

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212494489881989876}
   - component: {fileID: 58314662389193792}
   - component: {fileID: 114932047849373668}
+  - component: {fileID: 95455560457329824}
   m_Layer: 8
   m_Name: ImmortalEnemy-R
   m_TagString: ImmortalEnemy
@@ -64,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190078069341528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.704477, y: -12.846957, z: 2.8984375}
+  m_LocalPosition: {x: -11.697539, y: -14.830069, z: 2.8984375}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0}
   m_Children:
   - {fileID: 4443754425988868}
@@ -86,6 +87,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.7}
   serializedVersion: 2
   m_Radius: 2
+--- !u!95 &95455560457329824
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1190078069341528}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 51c58c7b4c2e62349bbef2769c4048ec, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114932047849373668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bb699148c20694a894c1af4da84af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   dieTime: 0
   player: {fileID: 0}
   eye: {fileID: 0}

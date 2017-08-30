@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2bb699148c20694a894c1af4da84af8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   dieTime: 0
   player: {fileID: 0}
   eye: {fileID: 0}
