@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour {
     public void MoveSpawn(GameObject spawnPoint)
     {
         //将刷新点上移
-        spawnPoint.transform.position = new Vector3(0f, spawnPoint.transform.position.y + spawnPointChangeOffset.y, 0f);
+        spawnPoint.transform.position = new Vector3(0f, spawnPoint.transform.position.y + spawnPointChangeOffset.y, spawnPoint.transform.position.z);
         InsObject(spawnPoint);
     }
 

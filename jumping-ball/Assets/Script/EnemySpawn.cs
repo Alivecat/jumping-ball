@@ -7,7 +7,8 @@ public class EnemySpawn : MonoBehaviour {
 	public GameObject L_EnemySpawnPoint;
 	public GameObject R_EnemySpawnPoint;
     [Space]
-	public GameObject[] Enemy;
+	public GameObject[] Enemy_L;
+    public GameObject[] Enemy_R;
     [Space]
 	public GameObject currentEnemy;
 	public GameObject player;
@@ -29,17 +30,18 @@ public class EnemySpawn : MonoBehaviour {
 	}
 
 	void RandomLocSpawn(){
-		
-		if (L_Or_R == 0) {	
+        //0 -> left 1-> right
+        if (L_Or_R == 0) {	
 			pos = L_EnemySpawnPoint.transform.position;
-			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-1, 8), 0f);
-			currentEnemy = Instantiate (Enemy[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-1, 8), pos.z);
+			currentEnemy = Instantiate (Enemy_L[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
             currentEnemy.transform.Find("tag").tag = "L_enemy";
 		} else {
 			pos = R_EnemySpawnPoint.transform.position;
-			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-8, 8), 0f);
-			currentEnemy = Instantiate (Enemy[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-8, 8), pos.z);
+			currentEnemy = Instantiate (Enemy_R[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
             currentEnemy.transform.Find("tag").tag = "R_enemy";
+            
         }
 
 	}
