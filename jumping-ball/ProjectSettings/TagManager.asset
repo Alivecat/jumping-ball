@@ -9,6 +9,11 @@ TagManager:
   - Magenta
   - Pink
   - ColorChanger
+  - EdgeTrigger
+  - SpawnPointEdge
+  - 0
+  - 1
+  - 2
   layers:
   - Default
   - TransparentFX

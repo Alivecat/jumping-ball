@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
@@ -7,17 +8,21 @@ public class Player : MonoBehaviour {
 
 	public Rigidbody2D rb;
 	public SpriteRenderer sr;
+    public Text Score;
 
 	public string currentColor;
+    public int scoreText;
 
 	public Color colorCyan;
 	public Color colorYellow;
 	public Color colorMagenta;
 	public Color colorPink;
+    public GameManager GM;
 
-	void Start ()
+
+    void Start ()
 	{
-		SetRandomColor();
+        SetRandomColor();
 	}
 	
 	// Update is called once per frame
@@ -26,7 +31,8 @@ public class Player : MonoBehaviour {
 		{
 			rb.velocity = Vector2.up * jumpForce;
 		}
-	}
+        Score.text = "Score: " + scoreText.ToString();
+    }
 
 	void OnTriggerEnter2D (Collider2D col)
 	{
@@ -34,14 +40,24 @@ public class Player : MonoBehaviour {
 		{
 			SetRandomColor();
 			Destroy(col.gameObject);
-			return;
+            scoreText++;
+            return;
 		}
 
-		if (col.tag != currentColor)
+		if (col.tag != currentColor || col.tag == "EdgeTrigger")
 		{
-			Debug.Log("GAME OVER!");
+            if (col.tag == "SpawnPointEdge")
+            {
+                GM.DestoryCycle(col.transform.parent.gameObject);
+                GM.MoveSpawn(col.transform.parent.gameObject);
+                return;
+            }
+
+            Debug.Log("GAME OVER!");
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
+
+        
 	}
 
 	void SetRandomColor ()
