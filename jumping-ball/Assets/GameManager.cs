@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     [Space]
     public GameObject colorChangerPoint;
     [Space]
+    [Space]
     public int randomIndex;
 
     public Player player;
@@ -22,8 +23,8 @@ public class GameManager : MonoBehaviour {
     public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);
 
     void Start () {
-
         SpawnCircle();
+       
     }
 	
 	// Update is called once per frame
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour {
         player.rb.gravityScale = 3;
     }
 
-    void RandomIndex()
+     void RandomIndex()
     {
         randomIndex = Random.Range(0, 2);
     }
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour {
     {
         foreach (GameObject point in spawnPointGroup)
         {
+            //调用生成方法
             InsObject(point);
         }
         
@@ -55,7 +57,9 @@ public class GameManager : MonoBehaviour {
     void InsObject(GameObject point)
     {
         RandomIndex();
+        //将生成的圆环加入一个临时储存的数组，便于删除
         tempCircleGropu[int.Parse(point.tag)] = Instantiate(circleGroup[randomIndex], point.transform.position, point.transform.rotation);
+        //生成颜色切换点
         Instantiate(colorChangerPoint, point.transform.position + colorChangerPointSpawnOffset, point.transform.rotation);
     }
 
@@ -70,4 +74,5 @@ public class GameManager : MonoBehaviour {
     {
         Destroy(tempCircleGropu[int.Parse(spawnPoint.tag)]);  
     }
+
 }

@@ -7,11 +7,13 @@ public class Player : MonoBehaviour {
 	public float jumpForce = 10f;
     public enum GameState { pause, playing};
     public GameState currentState;
+    public int index;
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
     public Text Score;
     public GameManager GM;
+    public GameObject doubleCircle;
 
     public string currentColor;
     public int scoreText;
@@ -20,14 +22,13 @@ public class Player : MonoBehaviour {
 	public Color colorYellow;
 	public Color colorMagenta;
 	public Color colorPink;
-    
-
 
     void Start ()
 	{
         currentState = 0;
         SetScore();
-        SetRandomColor();
+        index = SetRandomColor();
+        //Debug.Log(index);
 	}
 	
 	// Update is called once per frame
@@ -82,11 +83,10 @@ public class Player : MonoBehaviour {
         
 	}
 
-	void SetRandomColor ()
+	int SetRandomColor ()
 	{
-		int index = Random.Range(0, 4);
-
-		switch (index)
+        index = Random.Range(0, 4);
+        switch (index)
 		{
 			case 0:
 				currentColor = "Cyan";
@@ -105,5 +105,6 @@ public class Player : MonoBehaviour {
 				sr.color = colorPink;
 				break;
 		}
+        return index;
 	}
 }
