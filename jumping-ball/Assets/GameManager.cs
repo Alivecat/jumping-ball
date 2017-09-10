@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -13,6 +14,10 @@ public class GameManager : MonoBehaviour {
     public GameObject colorChangerPoint;
     [Space]
     public int randomIndex;
+
+    public Player player;
+    public GameObject startButton;
+
     public Vector3 colorChangerPointSpawnOffset = new Vector3(0f, 3.5f, 0f);
     public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);
 
@@ -25,6 +30,13 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void StartButtonClick()
+    {
+        startButton.SetActive(false);
+        player.currentState = Player.GameState.playing;
+        player.rb.gravityScale = 3;
+    }
 
     void RandomIndex()
     {

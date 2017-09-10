@@ -5,32 +5,53 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
 	public float jumpForce = 10f;
+    public enum GameState { pause, playing};
+    public GameState currentState;
 
-	public Rigidbody2D rb;
+    public Rigidbody2D rb;
 	public SpriteRenderer sr;
     public Text Score;
+    public GameManager GM;
 
-	public string currentColor;
+    public string currentColor;
     public int scoreText;
 
 	public Color colorCyan;
 	public Color colorYellow;
 	public Color colorMagenta;
 	public Color colorPink;
-    public GameManager GM;
+    
 
 
     void Start ()
 	{
+        currentState = 0;
+        SetScore();
         SetRandomColor();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
-		{
-			rb.velocity = Vector2.up * jumpForce;
-		}
+
+        switch (currentState)
+        {
+            case GameState.pause:
+                rb.gravityScale = 0;
+                return;
+
+            case GameState.playing:
+                if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+                {
+                    rb.velocity = Vector2.up * jumpForce;
+                }
+                return;
+        }
+    }
+
+
+
+    void SetScore()
+    {
         Score.text = "Score: " + scoreText.ToString();
     }
 
@@ -41,6 +62,7 @@ public class Player : MonoBehaviour {
 			SetRandomColor();
 			Destroy(col.gameObject);
             scoreText++;
+            SetScore();
             return;
 		}
 
