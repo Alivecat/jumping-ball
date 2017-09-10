@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,6 +10,7 @@ public class Player : MonoBehaviour {
     public enum GameState { pause, playing};
     public GameState currentState;
     public int index;
+    //public bool RotateDoubleCircle;
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
@@ -25,14 +28,16 @@ public class Player : MonoBehaviour {
 
     void Start ()
 	{
+        GM.RotateDoubleCircle(index);
+        SetRandomColor();
         currentState = 0;
         SetScore();
-        index = SetRandomColor();
-        //Debug.Log(index);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+        GM.RotateDoubleCircle(index);
 
         switch (currentState)
         {
@@ -61,7 +66,7 @@ public class Player : MonoBehaviour {
 		if (col.tag == "ColorChanger")
 		{
 			SetRandomColor();
-			Destroy(col.gameObject);
+            Destroy(col.gameObject);
             scoreText++;
             SetScore();
             return;
@@ -77,13 +82,14 @@ public class Player : MonoBehaviour {
             }
 
             Debug.Log("GAME OVER!");
-			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 
         
 	}
 
-	int SetRandomColor ()
+
+	void SetRandomColor ()
 	{
         index = Random.Range(0, 4);
         switch (index)
@@ -105,6 +111,5 @@ public class Player : MonoBehaviour {
 				sr.color = colorPink;
 				break;
 		}
-        return index;
 	}
 }

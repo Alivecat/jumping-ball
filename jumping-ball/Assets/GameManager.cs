@@ -75,4 +75,42 @@ public class GameManager : MonoBehaviour {
         Destroy(tempCircleGropu[int.Parse(spawnPoint.tag)]);  
     }
 
+    public void RotateDoubleCircle(int index)
+    {
+    Debug.Log("StartCoroutine(IRotate(index)), index = " + index);
+        foreach (GameObject circle in tempCircleGropu)
+        {
+            if(circle.tag == "DoubleCircle")
+            {
+                switch (index)
+                {
+                    case 0: //Cyan
+                        Quaternion cyanRotation = Quaternion.Euler(0f, 0f, 135f);
+                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
+                        Debug.Log(circle.transform.rotation);
+                        break;
+
+                    case 1: //yellow
+                        Quaternion yellowRotation = Quaternion.Euler(0f, 0f, -135f);
+                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
+                        Debug.Log(circle.transform.rotation);
+                        break;
+
+                    case 2: //magenta
+                        Quaternion magentaRotation = Quaternion.Euler(0f, 0f, -45f);
+                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
+                        Debug.Log(circle.transform.rotation);
+                        break;
+
+                    case 3: //pink
+                        Quaternion pinkRotation = Quaternion.Euler(0f, 0f, 45f);
+                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f);
+                        Debug.Log(circle.transform.rotation);
+                        break;
+
+                }
+            }
+        }
+    }
+
 }

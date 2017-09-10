@@ -7,6 +7,7 @@ public class Rotator : MonoBehaviour {
 	public float speed;
     public float angle;
     public int colorIndex;
+    public GameObject GM;
     public GameObject ball;
     public GameObject insideCircle;
     public GameObject outsideCircle;
@@ -15,9 +16,8 @@ public class Rotator : MonoBehaviour {
     {
         ball = GameObject.Find("Player");
         colorIndex = ball.GetComponent<Player>().index;
-        //Debug.Log(colorIndex);
-
-        SetDoubleCircleRotation(colorIndex);
+        GM = GameObject.Find("GameManager");
+        //GM.GetComponent<GameManager>().RotateDoubleCircle(colorIndex);
         if (this.tag == "InsideCircle")
         {
             //Debug.Log("the speed of outside circle is: " + outsideCircle.GetComponent<Rotator>().speed);
@@ -47,28 +47,5 @@ public class Rotator : MonoBehaviour {
         }
     }
 
-    public void SetDoubleCircleRotation(int index)
-    {
-        switch (index)
-        {
-            case 0: //cyan
-                Debug.Log("cyan");
-                this.transform.Rotate(0f, 0f, 135f);
-                break;
-            case 1: //yellow
-                Debug.Log("yellow");
-                this.transform.Rotate(0f, 0f, -135f);
-                break;
-            case 2: //magenta
-                Debug.Log("magenta");
-                this.transform.Rotate(0f, 0f, -45f);
-                break;
-            case 3: //pink
-                Debug.Log("pink");
-                this.transform.Rotate(0f, 0f, 45f);
-                break;
-        }
-
-    }
 
 }
