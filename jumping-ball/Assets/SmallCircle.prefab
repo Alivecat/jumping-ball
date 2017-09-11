@@ -155,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 1373692971720312}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.33, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 4258849642506140}
   - {fileID: 4023518219183186}
@@ -367,6 +367,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
+  angle: 0
+  colorIndex: 0
+  GM: {fileID: 0}
+  ball: {fileID: 0}
+  insideCircle: {fileID: 0}
+  outsideCircle: {fileID: 0}
 --- !u!212 &212117567019509938
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour {
     {
         startButton.SetActive(false);
         player.currentState = Player.GameState.playing;
-        player.rb.gravityScale = 3;
+        player.rb.gravityScale = 2;
     }
 
      void RandomIndex()
@@ -60,7 +60,9 @@ public class GameManager : MonoBehaviour {
         //将生成的圆环加入一个临时储存的数组，便于删除
         tempCircleGropu[int.Parse(point.tag)] = Instantiate(circleGroup[randomIndex], point.transform.position, point.transform.rotation);
         //生成颜色切换点
-        Instantiate(colorChangerPoint, point.transform.position + colorChangerPointSpawnOffset, point.transform.rotation);
+        //Instantiate(colorChangerPoint, point.transform.position + colorChangerPointSpawnOffset, point.transform.rotation);
+        //在中心点生成颜色切换点
+        Instantiate(colorChangerPoint, point.transform.position, point.transform.rotation);
     }
 
     public void MoveSpawn(GameObject spawnPoint)
@@ -77,7 +79,6 @@ public class GameManager : MonoBehaviour {
 
     public void RotateDoubleCircle(int index)
     {
-    Debug.Log("StartCoroutine(IRotate(index)), index = " + index);
         foreach (GameObject circle in tempCircleGropu)
         {
             if(circle.tag == "DoubleCircle")

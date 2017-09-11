@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
 
-	public float jumpForce = 10f;
+	public float jumpForce = 7.5f;
     public enum GameState { pause, playing};
     public GameState currentState;
     public int index;
@@ -17,6 +17,9 @@ public class Player : MonoBehaviour {
     public Text Score;
     public GameManager GM;
     public GameObject doubleCircle;
+    public AudioSource jumpSound;
+    public AudioSource colorSwitch;
+    public AudioSource die;
 
     public string currentColor;
     public int scoreText;
@@ -49,6 +52,7 @@ public class Player : MonoBehaviour {
                 if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
                 {
                     rb.velocity = Vector2.up * jumpForce;
+                    jumpSound.Play();
                 }
                 return;
         }
@@ -67,6 +71,7 @@ public class Player : MonoBehaviour {
 		{
 			SetRandomColor();
             Destroy(col.gameObject);
+            colorSwitch.Play();
             scoreText++;
             SetScore();
             return;
@@ -80,14 +85,22 @@ public class Player : MonoBehaviour {
                 GM.MoveSpawn(col.transform.parent.gameObject);
                 return;
             }
-
+            
             Debug.Log("GAME OVER!");
-			//SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            StartCoroutine(ReloadScene());
+            currentState = GameState.pause;
 		}
 
         
 	}
 
+    IEnumerator ReloadScene()
+    {
+        die.Play();
+        yield  return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      
+    }
 
 	void SetRandomColor ()
 	{
