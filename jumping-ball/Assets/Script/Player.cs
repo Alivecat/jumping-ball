@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
 	public float jumpForce = 7.5f;
-    public enum GameState { pause, playing};
+    public enum GameState { gameover, playing};
     public GameState currentState;
     public int index;
-    //public bool RotateDoubleCircle;
+    [Range(1f, 10f)]
+    public float slowness = 10f;
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour {
     public AudioSource jumpSound;
     public AudioSource colorSwitch;
     public AudioSource die;
+    public Animator playerAnimator;
 
     public string currentColor;
     public int scoreText;
@@ -36,15 +38,19 @@ public class Player : MonoBehaviour {
         currentState = 0;
         SetScore();
 	}
-	
+
+    void FixedUpdate()
+    {
+       
+    }
+
 	// Update is called once per frame
 	void Update () {
 
         GM.RotateDoubleCircle(index);
-
         switch (currentState)
         {
-            case GameState.pause:
+            case GameState.gameover:
                 rb.gravityScale = 0;
                 return;
 
@@ -52,6 +58,7 @@ public class Player : MonoBehaviour {
                 if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
                 {
                     rb.velocity = Vector2.up * jumpForce;
+                    playerAnimator.SetTrigger("isJump");
                     jumpSound.Play();
                 }
                 return;
@@ -67,40 +74,52 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D col)
 	{
-		if (col.tag == "ColorChanger")
-		{
-			SetRandomColor();
-            Destroy(col.gameObject);
-            colorSwitch.Play();
-            scoreText++;
-            SetScore();
-            return;
-		}
-
-		if (col.tag != currentColor || col.tag == "EdgeTrigger")
-		{
-            if (col.tag == "SpawnPointEdge")
+        if (currentState != 0)
+        {
+            if (col.tag == "ColorChanger")
             {
-                GM.DestoryCycle(col.transform.parent.gameObject);
-                GM.MoveSpawn(col.transform.parent.gameObject);
+                SetRandomColor();
+                Destroy(col.gameObject);
+                colorSwitch.Play();
+                scoreText++;
+                SetScore();
                 return;
             }
-            
-            Debug.Log("GAME OVER!");
-            StartCoroutine(ReloadScene());
-            currentState = GameState.pause;
-		}
 
-        
+            if (col.tag != currentColor || col.tag == "EdgeTrigger")
+            {
+                if (col.tag == "SpawnPointEdge")
+                {
+                    GM.DestoryCycle(col.transform.parent.gameObject);
+                    GM.MoveSpawn(col.transform.parent.gameObject);
+                    return;
+                }
+
+                Debug.Log("GAME OVER!");
+                currentState = GameState.gameover;
+                StartCoroutine(ReloadScene());
+            }
+        }  
 	}
 
     IEnumerator ReloadScene()
     {
         die.Play();
+        Time.timeScale = 1f / slowness;
+        Time.fixedDeltaTime = Time.fixedDeltaTime / slowness;
+        yield return new WaitForSeconds(1f / slowness);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    /*IEnumerator ReloadScene()
+    {
+        
         yield  return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
       
-    }
+    }*/
 
 	void SetRandomColor ()
 	{
