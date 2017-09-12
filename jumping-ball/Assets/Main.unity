@@ -312,7 +312,7 @@ GameObject:
   - component: {fileID: 479987024}
   - component: {fileID: 479987025}
   m_Layer: 0
-  m_Name: EdgeTrigger (1)
+  m_Name: EdgeTrigger
   m_TagString: SpawnPointEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,152 +412,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &760492940
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 760492943}
-  - component: {fileID: 760492942}
-  - component: {fileID: 760492941}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &760492941
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 760492940}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 15, y: 15}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
-  m_MaskInteraction: 0
---- !u!95 &760492942
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 760492940}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8faad58ec57662642a07cda1b282187e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!4 &760492943
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 760492940}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.5, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &812084488
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1589390084619672, guid: 9f8e7a1cc66915f4890818a3dc890a62,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 812084489}
-  - component: {fileID: 812084490}
-  m_Layer: 0
-  m_Name: EdgeTrigger (1)
-  m_TagString: SpawnPointEdge
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &812084489
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4496878364921336, guid: 9f8e7a1cc66915f4890818a3dc890a62,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 812084488}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.5, z: 0}
-  m_LocalScale: {x: 22, y: 0.099999994, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1967498803}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &812084490
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 61171429759321160, guid: 9f8e7a1cc66915f4890818a3dc890a62,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 812084488}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &1033755438
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,6 +452,7 @@ MonoBehaviour:
   - {fileID: 0}
   colorChangerPoint: {fileID: 1234807418582224, guid: 83c32233dd23abb4f95dd82a4f9644dd,
     type: 2}
+  currentGameState: 0
   randomIndex: 0
   player: {fileID: 2124206072}
   startButton: {fileID: 88499768}
@@ -666,7 +521,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.1397059, g: 0.1397059, b: 0.1397059, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.8117647, b: 1, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -705,7 +560,7 @@ Transform:
   m_Children:
   - {fileID: 595269252}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1304181407
 MonoBehaviour:
@@ -825,7 +680,7 @@ GameObject:
   - component: {fileID: 1515328135}
   - component: {fileID: 1515328136}
   m_Layer: 0
-  m_Name: EdgeTrigger (1)
+  m_Name: EdgeTrigger
   m_TagString: SpawnPointEdge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -852,6 +707,63 @@ BoxCollider2D:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1515328134}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!1 &1573643692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1589390084619672, guid: 9f8e7a1cc66915f4890818a3dc890a62,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1573643693}
+  - component: {fileID: 1573643694}
+  m_Layer: 0
+  m_Name: EdgeTrigger
+  m_TagString: SpawnPointEdge
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1573643693
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4496878364921336, guid: 9f8e7a1cc66915f4890818a3dc890a62,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1573643692}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 12.5, z: 0}
+  m_LocalScale: {x: 22, y: 0.099999994, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1967498803}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1573643694
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 61171429759321160, guid: 9f8e7a1cc66915f4890818a3dc890a62,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1573643692}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -900,7 +812,7 @@ Transform:
   m_Children:
   - {fileID: 1515328135}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1957091783
 GameObject:
@@ -1003,9 +915,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 812084489}
+  - {fileID: 1573643693}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982783408
 GameObject:
@@ -1036,7 +948,7 @@ Transform:
   m_Children:
   - {fileID: 479987024}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2006067184
 GameObject:
@@ -1192,7 +1104,7 @@ GameObject:
   - component: {fileID: 2124206070}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1473,21 +1385,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 7.5
-  currentState: 0
+  currentColor: 
+  scoreText: 0
+  havePlayerCollider2D: 0
+  setRigbody2D: 0
+  currentPlayerState: 1
   index: 0
   slowness: 10
   rb: {fileID: 2124206071}
   sr: {fileID: 2124206073}
   Score: {fileID: 1957091785}
   GM: {fileID: 1033755439}
+  rotator: {fileID: 0}
   doubleCircle: {fileID: 1242472494265336, guid: 3d9062aff07783d4d9d1f93ae5a7dbb5,
     type: 2}
   jumpSound: {fileID: 2124206075}
   colorSwitch: {fileID: 2124206076}
   die: {fileID: 2124206077}
   playerAnimator: {fileID: 2124206078}
-  currentColor: 
-  scoreText: 0
   colorCyan: {r: 0.20784315, g: 0.8862746, b: 0.9490197, a: 1}
   colorYellow: {r: 0.96470594, g: 0.8745099, b: 0.054901965, a: 1}
   colorMagenta: {r: 0.54901963, g: 0.07450981, b: 0.9843138, a: 1}
@@ -1546,7 +1461,7 @@ Transform:
   m_Children:
   - {fileID: 411798080}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2124206075
 AudioSource:

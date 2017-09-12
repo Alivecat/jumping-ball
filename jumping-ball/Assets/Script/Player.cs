@@ -7,25 +7,28 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
 	public float jumpForce = 7.5f;
-    public enum GameState { gameover, playing};
-    public GameState currentState;
+    public string currentColor;
+    public int scoreText;
+    public bool havePlayerCollider2D;
+    public bool setRigbody2D;
+
+    public enum PlayerState { Normal, Immortal, SlowerCircle, penetration};
+    public PlayerState currentPlayerState = 0;
     public int index;
     [Range(1f, 10f)]
     public float slowness = 10f;
-
+    [Space]
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
     public Text Score;
     public GameManager GM;
+    public GameObject rotator;
     public GameObject doubleCircle;
     public AudioSource jumpSound;
     public AudioSource colorSwitch;
     public AudioSource die;
     public Animator playerAnimator;
-
-    public string currentColor;
-    public int scoreText;
-
+    [Space]
 	public Color colorCyan;
 	public Color colorYellow;
 	public Color colorMagenta;
@@ -35,37 +38,73 @@ public class Player : MonoBehaviour {
 	{
         GM.RotateDoubleCircle(index);
         SetRandomColor();
-        currentState = 0;
+        GM.currentGameState = 0;
         SetScore();
 	}
 
-    void FixedUpdate()
-    {
-       
-    }
-
-	// Update is called once per frame
 	void Update () {
 
         GM.RotateDoubleCircle(index);
-        switch (currentState)
+        switch (GM.currentGameState)
         {
-            case GameState.gameover:
+            case GameManager.GameState.gameover:
                 rb.gravityScale = 0;
                 return;
 
-            case GameState.playing:
-                if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+            case GameManager.GameState.playing:
+                Jump();
+                switch (currentPlayerState)
                 {
-                    rb.velocity = Vector2.up * jumpForce;
-                    playerAnimator.SetTrigger("isJump");
-                    jumpSound.Play();
+                    case PlayerState.Normal:
+                        NormalStatesetting();
+                        break;
+
+                    case PlayerState.Immortal:
+                        setRigbody2D = true;
+                        if (!havePlayerCollider2D)
+                        {
+                            //gameObject.AddComponent<PolygonCollider2D>();
+                            havePlayerCollider2D = true;
+                        }
+                        break;
+
+
+                    case PlayerState.SlowerCircle:
+                        NormalStatesetting();
+                        break;
+
+                    case PlayerState.penetration:
+                        NormalStatesetting();
+                        break;
                 }
+
                 return;
         }
     }
 
+    void NormalStatesetting()
+    {
+        setRigbody2D = false;
+        foreach (GameObject circle in GM.tempCircleGropu)
+        {
+            if (circle.GetComponent<Rigidbody2D>() != null)
+            {
+                circle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                circle.GetComponent<Rigidbody2D>().simulated = false;
+            }
+            if (havePlayerCollider2D)
+            {
+                if(circle.tag != currentColor)
+                {
+                    GameObject.Destroy(gameObject.GetComponent<PolygonCollider2D>());
+                    gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
+                    havePlayerCollider2D = false;
+                }
+               
 
+            }
+        }
+    }
 
     void SetScore()
     {
@@ -74,33 +113,101 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D col)
 	{
-        if (currentState != 0)
+        if (GM.currentGameState != 0)
         {
             if (col.tag == "ColorChanger")
             {
-                SetRandomColor();
-                Destroy(col.gameObject);
-                colorSwitch.Play();
-                scoreText++;
-                SetScore();
+                ColorCHangerEnter(col);
                 return;
             }
 
-            if (col.tag != currentColor || col.tag == "EdgeTrigger")
+            if (currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
             {
+
+                if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                {
+                    //生成坐标点
+                    if (col.tag == "SpawnPointEdge")
+                    {
+                        GM.colorChangerPointSpawnOffset = new Vector3(0f, 4f, 0f);
+                        GM.spawnPointChangeOffset = new Vector3(0f, 24f, 0f);
+                        GM.DestoryCycle(col.transform.parent.gameObject);
+                        GM.MoveSpawn(col.transform.parent.gameObject);
+                        return;
+                    }
+                    //默认触发死亡慢动作
+                    Debug.Log("GAME OVER!");
+                    GM.currentGameState = GameManager.GameState.gameover;
+                    StartCoroutine(ReloadScene());
+                }
+            }
+
+            //无敌模式
+            if(currentPlayerState == PlayerState.penetration)
+            {
+                if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                {
+                    //生成坐标点
+                    if (col.tag == "SpawnPointEdge")
+                    {
+                        GM.colorChangerPointSpawnOffset = new Vector3(0f, 4f, 0f);
+                        GM.spawnPointChangeOffset = new Vector3(0f, 24f, 0f);
+                        GM.DestoryCycle(col.transform.parent.gameObject);
+                        GM.MoveSpawn(col.transform.parent.gameObject);
+                        return;
+                    }
+                }
+            }
+
+            if (currentPlayerState == PlayerState.Immortal)
+            {
+                
+                if(col.tag == currentColor)
+                {
+                    col.GetComponentInParent<Rigidbody2D>().simulated = false;
+                    return;
+                }
+
+                if(col.tag == "EdgeTrigger")
+                {
+                    Debug.Log("GAME OVER!");
+                    GM.currentGameState = GameManager.GameState.gameover;
+                    StartCoroutine(ReloadScene());
+                    return;
+                }
+
                 if (col.tag == "SpawnPointEdge")
                 {
+                    GM.colorChangerPointSpawnOffset = new Vector3(0f, 2f, 0f);
+                    GM.spawnPointChangeOffset = new Vector3(0f, 12f, 0f);
                     GM.DestoryCycle(col.transform.parent.gameObject);
                     GM.MoveSpawn(col.transform.parent.gameObject);
                     return;
                 }
 
-                Debug.Log("GAME OVER!");
-                currentState = GameState.gameover;
-                StartCoroutine(ReloadScene());
             }
-        }  
+        } 
+       
 	}
+
+    void Jump()
+    {
+        if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+        {
+            rb.velocity = Vector2.up * jumpForce;
+            playerAnimator.SetTrigger("isJump");
+            jumpSound.Play();
+        }
+    }
+
+    void ColorCHangerEnter(Collider2D col)
+    {
+        SetRandomColor();
+        Destroy(col.gameObject);
+        colorSwitch.Play();
+        scoreText++;
+        SetScore();
+    }
 
     IEnumerator ReloadScene()
     {
@@ -112,14 +219,6 @@ public class Player : MonoBehaviour {
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
-    /*IEnumerator ReloadScene()
-    {
-        
-        yield  return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-      
-    }*/
 
 	void SetRandomColor ()
 	{
@@ -144,4 +243,6 @@ public class Player : MonoBehaviour {
 				break;
 		}
 	}
+
+   
 }
