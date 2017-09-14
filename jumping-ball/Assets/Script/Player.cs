@@ -7,28 +7,30 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 
 	public float jumpForce = 7.5f;
-    public string currentColor;
-    public int scoreText;
-    public bool havePlayerCollider2D;
     public bool setRigbody2D;
 
-    public enum PlayerState { Normal, Immortal, SlowerCircle, penetration};
-    public PlayerState currentPlayerState = 0;
+    public enum PlayerState { Normal, Immortal, SlowerCircle, penetration };
+    public PlayerState currentPlayerState;
+
     public int index;
     [Range(1f, 10f)]
     public float slowness = 10f;
-    [Space]
+
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
     public Text Score;
     public GameManager GM;
-    public GameObject rotator;
     public GameObject doubleCircle;
+    public GameObject smallCircle;
     public AudioSource jumpSound;
     public AudioSource colorSwitch;
     public AudioSource die;
     public Animator playerAnimator;
-    [Space]
+    public Animator eyesAnimator;
+
+    public string currentColor;
+    public int scoreText;
+
 	public Color colorCyan;
 	public Color colorYellow;
 	public Color colorMagenta;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour {
         SetScore();
 	}
 
+	// Update is called once per frame
 	void Update () {
 
         GM.RotateDoubleCircle(index);
@@ -52,57 +55,37 @@ public class Player : MonoBehaviour {
                 return;
 
             case GameManager.GameState.playing:
-                Jump();
+
                 switch (currentPlayerState)
                 {
                     case PlayerState.Normal:
-                        NormalStatesetting();
+                        jump();
                         break;
 
                     case PlayerState.Immortal:
                         setRigbody2D = true;
-                        if (!havePlayerCollider2D)
-                        {
-                            //gameObject.AddComponent<PolygonCollider2D>();
-                            havePlayerCollider2D = true;
-                        }
-                        break;
-
-
-                    case PlayerState.SlowerCircle:
-                        NormalStatesetting();
+                        jump();
                         break;
 
                     case PlayerState.penetration:
-                        NormalStatesetting();
+                        jump();
+                        break;
+                    case PlayerState.SlowerCircle:
+                        jump();
                         break;
                 }
-
-                return;
+        return;
         }
     }
 
-    void NormalStatesetting()
+    void jump()
     {
-        setRigbody2D = false;
-        foreach (GameObject circle in GM.tempCircleGropu)
+        if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
         {
-            if (circle.GetComponent<Rigidbody2D>() != null)
-            {
-                circle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                circle.GetComponent<Rigidbody2D>().simulated = false;
-            }
-            if (havePlayerCollider2D)
-            {
-                if(circle.tag != currentColor)
-                {
-                    GameObject.Destroy(gameObject.GetComponent<PolygonCollider2D>());
-                    gameObject.AddComponent<PolygonCollider2D>().isTrigger = true;
-                    havePlayerCollider2D = false;
-                }
-               
-
-            }
+            rb.velocity = Vector2.up * jumpForce;
+            playerAnimator.SetTrigger("isJump");
+            eyesAnimator.SetTrigger("isJump");
+            jumpSound.Play();
         }
     }
 
@@ -115,60 +98,48 @@ public class Player : MonoBehaviour {
 	{
         if (GM.currentGameState != 0)
         {
-            if (col.tag == "ColorChanger")
+            //Normal状态
+            if(currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
             {
-                ColorCHangerEnter(col);
-                return;
-            }
-
-            if (currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
-            {
-
-                if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                if (col.tag == "ColorChanger")
                 {
-                    //生成坐标点
+                    SetRandomColor();
+                    Destroy(col.gameObject);
+                    colorSwitch.Play();
+                    scoreText++;
+                    SetScore();
+                    return;
+                }
+
+				if (col.tag != currentColor || col.tag == "EdgeTrigger" || col.tag == "L_enemy" || col.tag == "R_enemy")
+                {
                     if (col.tag == "SpawnPointEdge")
                     {
-                        GM.colorChangerPointSpawnOffset = new Vector3(0f, 4f, 0f);
-                        GM.spawnPointChangeOffset = new Vector3(0f, 24f, 0f);
                         GM.DestoryCycle(col.transform.parent.gameObject);
                         GM.MoveSpawn(col.transform.parent.gameObject);
                         return;
                     }
-                    //默认触发死亡慢动作
+
                     Debug.Log("GAME OVER!");
                     GM.currentGameState = GameManager.GameState.gameover;
                     StartCoroutine(ReloadScene());
                 }
             }
 
-            //无敌模式
-            if(currentPlayerState == PlayerState.penetration)
-            {
-                if (col.tag != currentColor || col.tag == "EdgeTrigger")
-                {
-                    //生成坐标点
-                    if (col.tag == "SpawnPointEdge")
-                    {
-                        GM.colorChangerPointSpawnOffset = new Vector3(0f, 4f, 0f);
-                        GM.spawnPointChangeOffset = new Vector3(0f, 24f, 0f);
-                        GM.DestoryCycle(col.transform.parent.gameObject);
-                        GM.MoveSpawn(col.transform.parent.gameObject);
-                        return;
-                    }
-                }
-            }
-
+            //Immortal状态
             if (currentPlayerState == PlayerState.Immortal)
             {
-                
-                if(col.tag == currentColor)
+                if (col.tag == "ColorChanger")
                 {
-                    col.GetComponentInParent<Rigidbody2D>().simulated = false;
+                    SetRandomColor();
+                    Destroy(col.gameObject); 
+                    colorSwitch.Play();
+                    scoreText++;
+                    SetScore();
                     return;
                 }
 
-                if(col.tag == "EdgeTrigger")
+                if (col.tag == "EdgeTrigger")
                 {
                     Debug.Log("GAME OVER!");
                     GM.currentGameState = GameManager.GameState.gameover;
@@ -178,35 +149,61 @@ public class Player : MonoBehaviour {
 
                 if (col.tag == "SpawnPointEdge")
                 {
-                    GM.colorChangerPointSpawnOffset = new Vector3(0f, 2f, 0f);
-                    GM.spawnPointChangeOffset = new Vector3(0f, 12f, 0f);
                     GM.DestoryCycle(col.transform.parent.gameObject);
                     GM.MoveSpawn(col.transform.parent.gameObject);
                     return;
                 }
 
+                if (gameObject.tag != col.tag)
+                {
+                    col.GetComponent<PolygonCollider2D>().isTrigger = false;
+                    StartCoroutine(SetTriggerTrue(col));
+                    return;
+                }
+
             }
-        } 
-       
+
+            //穿越模式
+            if (currentPlayerState == PlayerState.penetration)
+            {
+
+
+                if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                {
+                    if (col.tag == "ColorChanger")
+                    {
+                        SetRandomColor();
+                        Destroy(col.gameObject);
+                        colorSwitch.Play();
+                        scoreText++;
+                        SetScore();
+                        return;
+                    }
+
+                    if (col.tag == "EdgeTrigger")
+                    {
+                        Debug.Log("GAME OVER!");
+                        GM.currentGameState = GameManager.GameState.gameover;
+                        StartCoroutine(ReloadScene());
+                        return;
+                    }
+
+                    if (col.tag == "SpawnPointEdge")
+                    {
+                        GM.DestoryCycle(col.transform.parent.gameObject);
+                        GM.MoveSpawn(col.transform.parent.gameObject);
+                        return;
+                    }
+                }
+            }
+
+        }  
 	}
 
-    void Jump()
+    IEnumerator SetTriggerTrue(Collider2D col)
     {
-        if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
-        {
-            rb.velocity = Vector2.up * jumpForce;
-            playerAnimator.SetTrigger("isJump");
-            jumpSound.Play();
-        }
-    }
-
-    void ColorCHangerEnter(Collider2D col)
-    {
-        SetRandomColor();
-        Destroy(col.gameObject);
-        colorSwitch.Play();
-        scoreText++;
-        SetScore();
+        yield return new WaitForSeconds(0.5f);
+        col.GetComponent<PolygonCollider2D>().isTrigger = true;
     }
 
     IEnumerator ReloadScene()
@@ -220,6 +217,7 @@ public class Player : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+
 	void SetRandomColor ()
 	{
         index = Random.Range(0, 4);
@@ -228,21 +226,26 @@ public class Player : MonoBehaviour {
 			case 0:
 				currentColor = "Cyan";
 				sr.color = colorCyan;
-				break;
+                gameObject.tag = "Cyan";
+
+                break;
 			case 1:
 				currentColor = "Yellow";
 				sr.color = colorYellow;
-				break;
+                gameObject.tag = "Yellow";
+                break;
 			case 2:
 				currentColor = "Magenta";
 				sr.color = colorMagenta;
-				break;
+                gameObject.tag = "Magenta";
+                break;
 			case 3:
 				currentColor = "Pink";
 				sr.color = colorPink;
-				break;
+                gameObject.tag = "Pink";
+                break;
 		}
 	}
-
-   
+    
+     
 }

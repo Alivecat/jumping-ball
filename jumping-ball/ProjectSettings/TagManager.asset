@@ -17,6 +17,8 @@ TagManager:
   - InsideCircle
   - OutsideCircle
   - DoubleCircle
+  - L_enemy
+  - R_enemy
   layers:
   - Default
   - TransparentFX
