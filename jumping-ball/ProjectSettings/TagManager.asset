@@ -17,6 +17,10 @@ TagManager:
   - InsideCircle
   - OutsideCircle
   - DoubleCircle
+  - NormalEnemy
+  - SlowMotionEnemy
+  - PenetrationEnemy
+  - ImmortalEnemy
   - L_enemy
   - R_enemy
   layers:

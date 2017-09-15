@@ -23,10 +23,12 @@ public class Rotator : MonoBehaviour
 
         if (this.tag == "InsideCircle")
         {
+            //内圆与外圆以相等速度反向旋转
             speed = -outsideCircle.GetComponent<Rotator>().speed;
         }
         else
         {
+            //外圆随机转速
             RandomSpeed();
         }
     }
@@ -35,6 +37,7 @@ public class Rotator : MonoBehaviour
     {
         if (player.GetComponent<Player>().currentPlayerState == Player.PlayerState.SlowerCircle)
         {
+            //子弹时间内放慢速度
             transform.Rotate(0f, 0f, (speed * 0.5f) * Time.deltaTime);
         }
         else

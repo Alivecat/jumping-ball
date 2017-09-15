@@ -5,25 +5,25 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-    public GameObject[] circleGroup;
+    public GameObject[] circleGroup;            //色环的预制体组
     [Space]
-    public GameObject[] spawnPointGroup;
+    public GameObject[] spawnPointGroup;        //刷新点组
     [Space]
-    public GameObject[] tempCircleGropu;
+    public GameObject[] tempCircleGropu;        //保存目前出现的色环的引用 
     [Space]
-    public GameObject colorChangerPoint;
+    public GameObject colorChangerPoint;        //颜色切换点
     [Space]
     [Space]
-    public int randomIndex;
+    public int randomIndex;                     
 
-    public enum GameState { gameover, playing };
+    public enum GameState { gameover, playing };    //游戏状态
     public GameState currentGameState;
 
     public Player player;
     public GameObject startButton;
 
-    public Vector3 colorChangerPointSpawnOffset = new Vector3(0f, 3.5f, 0f);
-    public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);
+    public Vector3 colorChangerPointSpawnOffset = new Vector3(0f, 3.5f, 0f);    //颜色切换点间距   
+    public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);           //刷新点切换间距
 
     void Start () {
         SpawnCircle(); 
@@ -62,13 +62,14 @@ public class GameManager : MonoBehaviour {
 
     public void MoveSpawn(GameObject spawnPoint)
     {
-       // Debug.Log(spawnPoint.tag);
+        //将刷新点上移
         spawnPoint.transform.position = new Vector3(0f, spawnPoint.transform.position.y + spawnPointChangeOffset.y, 0f);
         InsObject(spawnPoint);
     }
 
     public void DestoryCycle(GameObject spawnPoint)
     {
+        //销毁生成点时销毁对应的色环
         Destroy(tempCircleGropu[int.Parse(spawnPoint.tag)]);  
     }
 
@@ -80,28 +81,29 @@ public class GameManager : MonoBehaviour {
             {
                 switch (index)
                 {
+                    //同步双色环的目标颜色
                     case 0: //Cyan
                         Quaternion cyanRotation = Quaternion.Euler(0f, 0f, -45f);
                         circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
-                       // Debug.Log(circle.transform.rotation);
+                       
                         break;
 
                     case 1: //yellow
                         Quaternion yellowRotation = Quaternion.Euler(0f, 0f, 135f);
                         circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
-                        //Debug.Log(circle.transform.rotation);
+                        
                         break;
 
                     case 2: //magenta
                         Quaternion magentaRotation = Quaternion.Euler(0f, 0f, -135f);
                         circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
-                       // Debug.Log(circle.transform.rotation);
+                       
                         break;
 
                     case 3: //pink
                         Quaternion pinkRotation = Quaternion.Euler(0f, 0f, 45f);
                         circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f);
-                       // Debug.Log(circle.transform.rotation);
+                       
                         break;
 
                 }

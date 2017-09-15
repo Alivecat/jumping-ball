@@ -15,18 +15,18 @@ public class EnemyFly : MonoBehaviour {
 	void Update () {
 
 		if (player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.SlowerCircle) {
-			if (gameObject.tag == "L_enemy") {
+			if (gameObject.transform.Find("tag").tag == "L_enemy") {
 				transform.Translate ((speed * 0.5f) * Time.deltaTime, 0f, 0f);
 			}
-			if (gameObject.tag == "R_enemy") {
+			if (gameObject.transform.Find("tag").tag == "R_enemy") {
 				transform.Translate ((-speed * 0.5f) * Time.deltaTime, 0f, 0f);
 			}
 
 		} else {
-			if (gameObject.tag == "L_enemy") {
+			if (gameObject.transform.Find("tag").tag == "L_enemy") {
 				transform.Translate (speed * Time.deltaTime, 0f, 0f);
 			}
-			if (gameObject.tag == "R_enemy") {
+			if (gameObject.transform.Find("tag").tag == "R_enemy") {
 				transform.Translate (-speed * Time.deltaTime, 0f, 0f);
 			}
 
