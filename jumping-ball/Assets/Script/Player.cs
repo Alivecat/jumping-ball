@@ -125,13 +125,6 @@ public class Player : MonoBehaviour {
                     return;
                 }
 
-                
-                if(col.transform.Find("tag").tag == "L_enemy" || col.transform.Find("tag").tag == "R_enemy")
-                {
-                    GameObject.Destroy(col);
-                    return;
-                }
-
                 if (col.tag == "EdgeTrigger")
                 {
                     GameOver();
