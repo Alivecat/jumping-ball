@@ -47,7 +47,7 @@ public class EnemySpawn : MonoBehaviour {
 
 	IEnumerator InsEnemy(){
 		while (true) {
-			Debug.Log("EnemySpawn");
+			//Debug.Log("EnemySpawn");
 			L_Or_R = Random.Range (0, 2); //0 -> left 1-> right
 			RandomLocSpawn ();
 			if (player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.SlowerCircle) {

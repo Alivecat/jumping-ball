@@ -19,8 +19,6 @@ public class Player : MonoBehaviour {
 	public SpriteRenderer sr;
     public Text Score;
     public GameManager GM;
-    public GameObject doubleCircle;
-    public GameObject smallCircle;
     public AudioSource jumpSound;
     public AudioSource colorSwitch;
     public AudioSource die;
@@ -104,7 +102,7 @@ public class Player : MonoBehaviour {
                     return;
                 }
 
-				if (col.tag != currentColor || col.tag == "EdgeTrigger" || col.transform.Find("tag").tag == "L_enemy" || col.transform.Find("tag").tag == "R_enemy")
+				if (col.tag != currentColor || col.tag == "EdgeTrigger")
                 {
                     if (col.tag == "SpawnPointEdge")
                     {
@@ -178,7 +176,7 @@ public class Player : MonoBehaviour {
         }  
 	}
 
-    void GameOver()
+    public void GameOver()
     {
         Debug.Log("GAME OVER!");
         GM.currentGameState = GameManager.GameState.gameover;

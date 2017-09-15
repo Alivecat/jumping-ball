@@ -23,6 +23,7 @@ TagManager:
   - ImmortalEnemy
   - L_enemy
   - R_enemy
+  - EatPoint
   layers:
   - Default
   - TransparentFX

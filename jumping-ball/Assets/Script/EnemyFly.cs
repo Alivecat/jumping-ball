@@ -39,4 +39,43 @@ public class EnemyFly : MonoBehaviour {
 		yield return new WaitForSeconds (5f);
 		GameObject.Destroy (gameObject);
 	}
+
+
+    void OnTriggerEnter2D(Collider2D target)
+    {
+        if(target.tag == "Player")
+        {
+            if(player.GetComponent<Player>().currentPlayerState == Player.PlayerState.Immortal 
+                || player.GetComponent<Player>().currentPlayerState == Player.PlayerState.penetration)
+            {
+                return;
+            }
+            Debug.Log("EnemyFly's onTriggerEnter hit you");
+            player.GetComponent<Player>().GameOver();
+        }
+
+        if(target.tag == "EatPoint")
+        {
+
+            switch (gameObject.tag)
+            {
+                case "ImmortalEnemy":
+                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.Immortal;
+                    break;
+                case "NormalEnemy":
+                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.Normal;
+                    break;
+                case "PenetrationEnemy":
+                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.penetration;
+                    break;
+                case "SlowMotionEnemy":
+                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.SlowerCircle;
+                    break;
+            }
+            Destroy(gameObject);
+        }
+
+        
+
+    }
 }
