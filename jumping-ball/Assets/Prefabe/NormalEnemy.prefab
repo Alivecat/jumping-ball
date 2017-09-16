@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212139764639023450}
   - component: {fileID: 58127517371685966}
   - component: {fileID: 114818875021342814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: NormalEnemy
   m_TagString: NormalEnemy
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4889840201355240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   player: {fileID: 0}
+  eye: {fileID: 0}
 --- !u!212 &212139764639023450
 SpriteRenderer:
   m_ObjectHideFlags: 1

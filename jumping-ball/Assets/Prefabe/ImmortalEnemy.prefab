@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212494489881989876}
   - component: {fileID: 58314662389193792}
   - component: {fileID: 114932047849373668}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ImmortalEnemy
   m_TagString: ImmortalEnemy
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4443754425988868}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   player: {fileID: 0}
+  eye: {fileID: 0}
 --- !u!212 &212494489881989876
 SpriteRenderer:
   m_ObjectHideFlags: 1

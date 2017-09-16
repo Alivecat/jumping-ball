@@ -14,13 +14,15 @@ public class Rotator : MonoBehaviour
     public GameObject player;
     public GameObject insideCircle;
     public GameObject outsideCircle;
+    public GameObject eye;
+    public GameObject eatPoint;
 
     void Start()
     {
         player = GameObject.Find("Player");
         colorIndex = player.GetComponent<Player>().index;
         GM = GameObject.Find("GameManager");
-
+        
         if (this.tag == "InsideCircle")
         {
             //内圆与外圆以相等速度反向旋转

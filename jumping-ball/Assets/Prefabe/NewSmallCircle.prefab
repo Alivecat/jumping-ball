@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4800028485250842}
   - component: {fileID: 212632247564600662}
   - component: {fileID: 60996627738556568}
+  - component: {fileID: 114110402191152040}
   m_Layer: 0
   m_Name: OutsideCircle_1
   m_TagString: Magenta
@@ -38,6 +39,7 @@ GameObject:
   - component: {fileID: 4790765761276054}
   - component: {fileID: 212263994554360780}
   - component: {fileID: 60051970703292910}
+  - component: {fileID: 114571932623193638}
   m_Layer: 0
   m_Name: OutsideCircle_2
   m_TagString: Pink
@@ -72,6 +74,7 @@ GameObject:
   - component: {fileID: 4583644100253128}
   - component: {fileID: 212537989254018960}
   - component: {fileID: 60698069671226714}
+  - component: {fileID: 114752769430021844}
   m_Layer: 0
   m_Name: OutsideCircle_3
   m_TagString: Cyan
@@ -89,6 +92,7 @@ GameObject:
   - component: {fileID: 4623793860773318}
   - component: {fileID: 212416054595518242}
   - component: {fileID: 60626605933337554}
+  - component: {fileID: 114388899944112196}
   m_Layer: 0
   m_Name: OutsideCircle_0
   m_TagString: Yellow
@@ -129,7 +133,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1703489409668500}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5199795, y: 6.37562, z: 0}
+  m_LocalPosition: {x: -4.2556195, y: -2.2528903, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_Children:
   - {fileID: 4623793860773318}
@@ -404,6 +408,19 @@ PolygonCollider2D:
       - {x: 1.02, y: -1.02}
       - {x: 1.02, y: -0.69}
       - {x: 0.96999997, y: -0.42999998}
+--- !u!114 &114110402191152040
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162706339448946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926923e4ab12c2d41985625a386b3a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eye: {fileID: 0}
+  eatPoint: {fileID: 0}
 --- !u!114 &114163225900316908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -423,6 +440,47 @@ MonoBehaviour:
   player: {fileID: 0}
   insideCircle: {fileID: 0}
   outsideCircle: {fileID: 0}
+  eye: {fileID: 0}
+  eatPoint: {fileID: 0}
+--- !u!114 &114388899944112196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1938566197651042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926923e4ab12c2d41985625a386b3a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eye: {fileID: 0}
+  eatPoint: {fileID: 0}
+--- !u!114 &114571932623193638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1299209985757338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926923e4ab12c2d41985625a386b3a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eye: {fileID: 0}
+  eatPoint: {fileID: 0}
+--- !u!114 &114752769430021844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1813110882181072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926923e4ab12c2d41985625a386b3a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eye: {fileID: 0}
+  eatPoint: {fileID: 0}
 --- !u!212 &212263994554360780
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4959969011610662}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 212502989672834600}
   - component: {fileID: 58283972784589596}
   - component: {fileID: 114770982579363912}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SlowMotionEnemy
   m_TagString: SlowMotionEnemy
   m_Icon: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   player: {fileID: 0}
+  eye: {fileID: 0}
 --- !u!212 &212502989672834600
 SpriteRenderer:
   m_ObjectHideFlags: 1

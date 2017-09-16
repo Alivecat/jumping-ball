@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class EnemyFly : MonoBehaviour {
 	public float speed;
+    public float dieTime;
 	public GameObject player;
+    public GameObject eye;
 
 
 	void Start(){
 		player = GameObject.Find("Player");
-		StartCoroutine (EnemyDie ());
+        eye = GameObject.Find("eye");
+        dieTime = 8f;
+        StartCoroutine (EnemyDie());
 	}
 
 	void Update () {
@@ -36,46 +40,57 @@ public class EnemyFly : MonoBehaviour {
 	}
 
 	IEnumerator EnemyDie(){
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (dieTime);
 		GameObject.Destroy (gameObject);
 	}
 
 
     void OnTriggerEnter2D(Collider2D target)
     {
+
         if(target.tag == "Player")
         {
-            if(player.GetComponent<Player>().currentPlayerState == Player.PlayerState.Immortal 
-                || player.GetComponent<Player>().currentPlayerState == Player.PlayerState.penetration)
+            if(player.GetComponent<Player>().currentPlayerState == Player.PlayerState.penetration)
             {
                 return;
             }
-            Debug.Log("EnemyFly's onTriggerEnter hit you");
-            player.GetComponent<Player>().GameOver();
+
+            if(player.GetComponent<Player>().currentPlayerState == Player.PlayerState.Immortal)
+            {
+                Destroy(gameObject);
+            }
+            player.GetComponent<Player>().GameOver(1);
+
         }
 
         if(target.tag == "EatPoint")
         {
+            Destroy(gameObject);
 
             switch (gameObject.tag)
             {
                 case "ImmortalEnemy":
                     player.GetComponent<Player>().currentPlayerState = Player.PlayerState.Immortal;
+                    player.GetComponent<Player>().setToNormalTrigger = true;
                     break;
                 case "NormalEnemy":
-                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.Normal;
+                    player.GetComponent<Player>().scoreText++;
+                    player.GetComponent<Player>().SetScore();
                     break;
                 case "PenetrationEnemy":
                     player.GetComponent<Player>().currentPlayerState = Player.PlayerState.penetration;
+                    player.GetComponent<Player>().setToNormalTrigger = true;
                     break;
                 case "SlowMotionEnemy":
                     player.GetComponent<Player>().currentPlayerState = Player.PlayerState.SlowerCircle;
+                    player.GetComponent<Player>().setToNormalTrigger = true;
                     break;
             }
-            Destroy(gameObject);
+            
+            
         }
 
-        
-
     }
+
+    
 }

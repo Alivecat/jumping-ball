@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4067868969105636}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 212129008574992322}
   - component: {fileID: 58327325488176658}
   - component: {fileID: 114578268680353650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PenetrationEnemy
   m_TagString: PenetrationEnemy
   m_Icon: {fileID: 0}
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   player: {fileID: 0}
+  eye: {fileID: 0}
 --- !u!212 &212129008574992322
 SpriteRenderer:
   m_ObjectHideFlags: 1

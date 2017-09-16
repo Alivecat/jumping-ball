@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 
     public Player player;
     public GameObject startButton;
+    public EnemySpawn enemySpawn;
 
     public Vector3 colorChangerPointSpawnOffset = new Vector3(0f, 3.5f, 0f);    //颜色切换点间距   
     public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);           //刷新点切换间距
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour {
         startButton.SetActive(false);
         currentGameState = GameState.playing;
         player.rb.gravityScale = 2;
+        enemySpawn.StartCoroutine(enemySpawn.InsEnemy());
     }
 
      void RandomIndex()

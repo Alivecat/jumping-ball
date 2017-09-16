@@ -21,7 +21,6 @@ public class EnemySpawn : MonoBehaviour {
 		player = GameObject.Find("Player");
         //间隔spawnTimer时间生成小怪
         spawnTimer = 1f;
-        StartCoroutine (InsEnemy ());
 	}
 	
 	// Update is called once per frame
@@ -45,13 +44,14 @@ public class EnemySpawn : MonoBehaviour {
 
 	}
 
-	IEnumerator InsEnemy(){
+	public IEnumerator InsEnemy(){
 		while (true) {
 			//Debug.Log("EnemySpawn");
 			L_Or_R = Random.Range (0, 2); //0 -> left 1-> right
 			RandomLocSpawn ();
 			if (player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.SlowerCircle) {
-				yield return new WaitForSeconds (spawnTimer * 2f);
+                //SlowerCircle状态下怪物生成速度减半
+                yield return new WaitForSeconds (spawnTimer * 2f);
 			} else {
 				yield return new WaitForSeconds (spawnTimer);
 			}

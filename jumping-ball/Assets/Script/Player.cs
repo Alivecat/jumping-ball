@@ -14,19 +14,21 @@ public class Player : MonoBehaviour {
     public int index;
     [Range(1f, 10f)]
     public float slowness = 10f;        //死亡时慢动作速率
+    public string currentColor;
+    public int scoreText;
+    public bool setToNormalTrigger;
+
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
     public Text Score;
+    public Text State;
     public GameManager GM;
     public AudioSource jumpSound;
     public AudioSource colorSwitch;
     public AudioSource die;
     public Animator playerAnimator;
     public Animator eyesAnimator;
-
-    public string currentColor;
-    public int scoreText;
 
 	public Color colorCyan;
 	public Color colorYellow;
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour {
 
     void Start ()
 	{
+        setToNormalTrigger = false;
         GM.RotateDoubleCircle(index);
         SetRandomColor();
         GM.currentGameState = 0;
@@ -42,7 +45,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-
+        State.text = currentPlayerState.ToString();
         GM.RotateDoubleCircle(index);
         switch (GM.currentGameState)
         {   //游戏状态机
@@ -60,16 +63,28 @@ public class Player : MonoBehaviour {
 
                     case PlayerState.Immortal:
                         jump();
+                        SetToNormalFunction();
                         break;
 
                     case PlayerState.penetration:
                         jump();
+                        SetToNormalFunction();
                         break;
                     case PlayerState.SlowerCircle:
                         jump();
+                        SetToNormalFunction();
                         break;
                 }
         return;
+        }
+    }
+
+    void SetToNormalFunction()
+    {
+        if (currentPlayerState != PlayerState.Normal && setToNormalTrigger)
+        {
+            StartCoroutine(SetToNormal());
+            setToNormalTrigger = false;
         }
     }
 
@@ -84,7 +99,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void SetScore()
+    public void SetScore()
     {
         Score.text = "Score: " + scoreText.ToString();
     }
@@ -110,7 +125,13 @@ public class Player : MonoBehaviour {
                         return;
                     }
 
-                    GameOver();
+                    //检测触发器物体后4个tag字母是否为nemy，判断是否为Enemy
+                    //检测4个字母是为了不引发碰到tag短于5个字母引发的ArgumentOutOfRangeException
+                    if (col.tag.Substring(col.tag.Length - 4,4) == "nemy")
+                    {
+                        return;
+                    }
+                    GameOver(2);
                 }
             }
 
@@ -125,7 +146,7 @@ public class Player : MonoBehaviour {
 
                 if (col.tag == "EdgeTrigger")
                 {
-                    GameOver();
+                    GameOver(3);
                     return;
                 }
 
@@ -137,11 +158,13 @@ public class Player : MonoBehaviour {
 
                 if (gameObject.tag != col.tag)
                 {
-                    //当碰撞对象颜色不相等时，将对象触发器属性取消，发生碰撞
-                    col.GetComponent<PolygonCollider2D>().isTrigger = false;
-                    //0.5秒后恢复对象触发器属性
-                    StartCoroutine(SetTriggerTrue(col));
-                    return;
+                    if (col.GetComponent<PartOfColorCircle>())
+                    {
+                        //当碰撞对象颜色不相等时，将对象触发器属性取消，发生碰撞
+                        col.GetComponent<PolygonCollider2D>().isTrigger = false;
+                        //0.5秒后恢复对象触发器属性
+                        StartCoroutine(SetTriggerTrue(col));
+                    }
                 }
 
             }
@@ -161,7 +184,7 @@ public class Player : MonoBehaviour {
 
                     if (col.tag == "EdgeTrigger")
                     {
-                        GameOver();
+                        GameOver(4);
                         return;
                     }
 
@@ -176,9 +199,9 @@ public class Player : MonoBehaviour {
         }  
 	}
 
-    public void GameOver()
+    public void GameOver(int i)
     {
-        Debug.Log("GAME OVER!");
+        Debug.Log("GAME OVER!  : " + i);
         GM.currentGameState = GameManager.GameState.gameover;
         StartCoroutine(ReloadScene());
     }
@@ -214,7 +237,14 @@ public class Player : MonoBehaviour {
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
+
+    IEnumerator SetToNormal()
+    {
+        Debug.Log("StartCoroutine ");
+        yield return new WaitForSeconds(3f);
+        currentPlayerState = PlayerState.Normal;
+    }
+
 
     void SetRandomColor ()
 	{
