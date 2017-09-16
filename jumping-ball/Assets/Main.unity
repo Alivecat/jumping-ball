@@ -1653,6 +1653,9 @@ MonoBehaviour:
   currentPlayerState: 0
   index: 0
   slowness: 10
+  currentColor: 
+  scoreText: 0
+  setToNormalTrigger: 0
   rb: {fileID: 2124206071}
   sr: {fileID: 2124206073}
   Score: {fileID: 1957091785}
@@ -1663,8 +1666,6 @@ MonoBehaviour:
   die: {fileID: 2124206077}
   playerAnimator: {fileID: 2124206078}
   eyesAnimator: {fileID: 411798082}
-  currentColor: 
-  scoreText: 0
   colorCyan: {r: 0, g: 0.76470596, b: 0.91372555, a: 1}
   colorYellow: {r: 1, g: 0.8705883, b: 0.24705884, a: 1}
   colorMagenta: {r: 0.5686275, g: 0.027450982, b: 0.5176471, a: 1}
