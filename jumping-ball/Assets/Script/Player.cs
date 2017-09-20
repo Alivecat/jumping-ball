@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
     public string currentColor;
     public int scoreText;
     public bool setToNormalTrigger;
-
+	public float buffTime;
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
@@ -241,7 +241,7 @@ public class Player : MonoBehaviour {
     IEnumerator SetToNormal()
     {
         Debug.Log("StartCoroutine ");
-        yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(buffTime);
         currentPlayerState = PlayerState.Normal;
     }
 

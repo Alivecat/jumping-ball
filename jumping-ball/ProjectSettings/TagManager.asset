@@ -24,6 +24,8 @@ TagManager:
   - L_enemy
   - R_enemy
   - EatPoint
+  - L_Cloud
+  - R_Cloud
   layers:
   - Default
   - TransparentFX

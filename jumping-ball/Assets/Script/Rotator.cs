@@ -56,12 +56,12 @@ public class Rotator : MonoBehaviour
     {
         if (this.tag == "OutsideCircle")
         {
-            speed = Random.Range(30, 100);
+            speed = Random.Range(30, 80);
 
         }
         else
         {
-            speed = Random.Range(50, 150);
+            speed = Random.Range(50, 130);
         }
     }
 

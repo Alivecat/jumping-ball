@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour {
     public void RotateDoubleCircle(int index)
     {
         foreach (GameObject circle in tempCircleGropu)
-        {
+		{ Transform circlTransform = circle.transform;
             if(circle.tag == "DoubleCircle")
             {
                 switch (index)
@@ -86,26 +86,25 @@ public class GameManager : MonoBehaviour {
                     //同步双色环的目标颜色
                     case 0: //Cyan
                         Quaternion cyanRotation = Quaternion.Euler(0f, 0f, -45f);
-                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
+						circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
                        
                         break;
 
                     case 1: //yellow
                         Quaternion yellowRotation = Quaternion.Euler(0f, 0f, 135f);
-                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
+					    circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
                         
                         break;
 
                     case 2: //magenta
                         Quaternion magentaRotation = Quaternion.Euler(0f, 0f, -135f);
-                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
+					    circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
                        
                         break;
 
                     case 3: //pink
                         Quaternion pinkRotation = Quaternion.Euler(0f, 0f, 45f);
-                        circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f);
-                       
+					    circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f); 
                         break;
 
                 }
