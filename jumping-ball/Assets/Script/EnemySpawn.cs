@@ -24,10 +24,6 @@ public class EnemySpawn : MonoBehaviour {
         spawnTimer = 1f;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	void RandomLocSpawn(){
         //0 -> left 1-> right
@@ -45,7 +41,7 @@ public class EnemySpawn : MonoBehaviour {
         }
 
 	}
-
+    //GameManager中开始协程
 	public IEnumerator InsEnemy(){
 		while (true) {
 			//Debug.Log("EnemySpawn");

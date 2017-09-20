@@ -6,19 +6,34 @@ public class CloudSpawn : MonoBehaviour {
 
     public Camera MainCamera;
     public GameObject[] CloudGroup;
-    public Vector3 SpawnLoc;
+    public GameObject currentCloud;
+    public Vector3 SpawnOffset;
+    public float spawnTimer;
 
-     void Start()
+    int RandomIndex(int min,int max)
     {
-        //Instantiate(CloudGroup[RandomIndex()], MainCamera.transform, true);
+        return Random.Range(min, max);
     }
 
-    void Update () {
-		
-	}
-
-    int RandomIndex()
+    public IEnumerator InsCloud()
     {
-        return Random.Range(0, 4);
+        while (true)
+        {
+            currentCloud = CloudGroup[RandomIndex(0, 4)];
+            if (currentCloud.tag == "L_Cloud")
+            {
+                SpawnOffset = new Vector3(RandomIndex(-55, -20), 90f, RandomIndex(110, 160));
+            }
+            if (currentCloud.tag == "R_Cloud")
+            {
+                SpawnOffset = new Vector3(RandomIndex(20, 55), 90f, RandomIndex(110, 160));
+            }
+
+            Instantiate(currentCloud, MainCamera.transform.position + SpawnOffset, Quaternion.identity);
+
+            yield return new WaitForSeconds(spawnTimer);
+        }
     }
+
+
 }

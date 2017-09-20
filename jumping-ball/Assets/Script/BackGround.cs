@@ -16,7 +16,7 @@ public class BackGround : MonoBehaviour {
 		
 		if (player.transform.position.y > (transform.position.y + offset))
 		{
-			transform.position += new Vector3(0, offset * 2, 0);
+			transform.position += new Vector3(0, offset * 3, 0);
 		}
 	}
 }

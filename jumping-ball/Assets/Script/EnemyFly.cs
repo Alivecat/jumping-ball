@@ -5,12 +5,18 @@ using UnityEngine;
 public class EnemyFly : MonoBehaviour {
 	public float speed;
     public float dieTime;
-	public GameObject player;
-    public GameObject eye;
+    public bool damage;
+    public float smoothing;
 
+    public GameObject player;
+    public GameObject eye;
+    public Animator animator;
 
 	void Start(){
-		player = GameObject.Find("Player");
+        smoothing = 5f;
+        damage = true;
+        animator = gameObject.GetComponent<Animator>();
+        player = GameObject.Find("Player");
         eye = GameObject.Find("eye");
         dieTime = 6f;
         StartCoroutine (EnemyDie());
@@ -35,11 +41,11 @@ public class EnemyFly : MonoBehaviour {
 			}
 
 		}
-
-
+        if(!damage)
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, player.transform.position, smoothing * Time.deltaTime);
 	}
 
-	IEnumerator EnemyDie(){
+    IEnumerator EnemyDie(float dieTime = 10f){
 		yield return new WaitForSeconds (dieTime);
 		GameObject.Destroy (gameObject);
 	}
@@ -59,31 +65,43 @@ public class EnemyFly : MonoBehaviour {
             {
                 Destroy(gameObject);
             }
-            player.GetComponent<Player>().GameOver(1);
+
+            if (damage)
+            {
+                player.GetComponent<Player>().GameOver(1);
+            }
+            
 
         }
 
         if(target.tag == "EatPoint")
         {
-            Destroy(gameObject);
-
+            damage = false;
+            animator.SetTrigger("isDie");
+            StartCoroutine(EnemyDie(0.5f));
+            speed = 1f;
+            
             switch (gameObject.tag)
             {
                 case "ImmortalEnemy":
                     player.GetComponent<Player>().currentPlayerState = Player.PlayerState.Immortal;
                     player.GetComponent<Player>().setToNormalTrigger = true;
+                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
                     break;
                 case "NormalEnemy":
                     player.GetComponent<Player>().scoreText++;
                     player.GetComponent<Player>().SetScore();
+                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
                     break;
                 case "PenetrationEnemy":
                     player.GetComponent<Player>().currentPlayerState = Player.PlayerState.penetration;
                     player.GetComponent<Player>().setToNormalTrigger = true;
+                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
                     break;
                 case "SlowMotionEnemy":
                     player.GetComponent<Player>().currentPlayerState = Player.PlayerState.SlowerCircle;
                     player.GetComponent<Player>().setToNormalTrigger = true;
+                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
                     break;
             }
             

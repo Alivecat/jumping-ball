@@ -36,7 +36,8 @@ GameObject:
   - component: {fileID: 4926712247086144}
   - component: {fileID: 212502989672834600}
   - component: {fileID: 114770982579363912}
-  - component: {fileID: 61930445368908258}
+  - component: {fileID: 95906637669010148}
+  - component: {fileID: 58083145144924240}
   m_Layer: 8
   m_Name: SlowMotionEnemy-R
   m_TagString: SlowMotionEnemy
@@ -51,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1859489192835368}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.031878, y: -13.0200205, z: 2.8984375}
+  m_LocalPosition: {x: -1.0923175, y: -16.051617, z: -33.26849}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0}
   m_Children:
   - {fileID: 4959969011610662}
@@ -71,8 +72,8 @@ Transform:
   m_Father: {fileID: 4926712247086144}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61930445368908258
-BoxCollider2D:
+--- !u!58 &58083145144924240
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -80,22 +81,29 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.13, y: 0.21}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
-    newSize: {x: 5, y: 5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0.05, y: 0.08}
   serializedVersion: 2
-  m_Size: {x: 3.2, y: 4}
-  m_EdgeRadius: 0
+  m_Radius: 1.8
+--- !u!95 &95906637669010148
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859489192835368}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 552cb2151a55ced4da65ca1b98475cb0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114770982579363912
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,8 +117,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   dieTime: 0
+  damage: 0
+  smoothing: 0
   player: {fileID: 0}
   eye: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!212 &212502989672834600
 SpriteRenderer:
   m_ObjectHideFlags: 1

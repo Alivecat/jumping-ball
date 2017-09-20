@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 
 public class Player : MonoBehaviour {
 
@@ -21,9 +21,8 @@ public class Player : MonoBehaviour {
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
-    public Text Score;
-    public Text State;
     public GameManager GM;
+    public GuiControl GuiControl;
     public AudioSource jumpSound;
     public AudioSource colorSwitch;
     public AudioSource die;
@@ -45,7 +44,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-        State.text = currentPlayerState.ToString();
+        GuiControl.State.text = currentPlayerState.ToString();
         GM.RotateDoubleCircle(index);
         switch (GM.currentGameState)
         {   //ÓÎÏ·×´Ì¬»ú
@@ -101,7 +100,7 @@ public class Player : MonoBehaviour {
 
     public void SetScore()
     {
-        Score.text = "Score: " + scoreText.ToString();
+        GuiControl.Score.text = "Score: " + scoreText.ToString();
     }
 
 	void OnTriggerEnter2D (Collider2D col)
@@ -221,6 +220,8 @@ public class Player : MonoBehaviour {
         GM.MoveSpawn(col.transform.parent.gameObject);
     }
 
+    
+
     IEnumerator SetTriggerTrue(Collider2D col)
     {
         yield return new WaitForSeconds(0.5f);
@@ -240,7 +241,6 @@ public class Player : MonoBehaviour {
 
     IEnumerator SetToNormal()
     {
-        Debug.Log("StartCoroutine ");
 		yield return new WaitForSeconds(buffTime);
         currentPlayerState = PlayerState.Normal;
     }

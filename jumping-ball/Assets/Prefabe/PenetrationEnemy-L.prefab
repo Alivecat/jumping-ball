@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212590506151416562}
   - component: {fileID: 58665829629169326}
   - component: {fileID: 114407724018642472}
+  - component: {fileID: 95654878714682300}
   m_Layer: 8
   m_Name: PenetrationEnemy-L
   m_TagString: PenetrationEnemy
@@ -51,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1832666682863744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.884904, y: -12.422322, z: 2.8984375}
+  m_LocalPosition: {x: -3.2134912, y: -13.795049, z: -32.26925}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0}
   m_Children:
   - {fileID: 4499747611928720}
@@ -86,6 +87,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.94
+--- !u!95 &95654878714682300
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1832666682863744}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 552cb2151a55ced4da65ca1b98475cb0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114407724018642472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -99,8 +117,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   dieTime: 0
+  damage: 0
+  smoothing: 0
   player: {fileID: 0}
   eye: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!212 &212590506151416562
 SpriteRenderer:
   m_ObjectHideFlags: 1

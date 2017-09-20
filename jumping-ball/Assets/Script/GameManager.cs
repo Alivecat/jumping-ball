@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     public Player player;
     public GameObject startButton;
     public EnemySpawn enemySpawn;
+    public CloudSpawn cloudSpawn;
 
     public Vector3 colorChangerPointSpawnOffset = new Vector3(0f, 3.5f, 0f);    //颜色切换点间距   
     public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);           //刷新点切换间距
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour {
         currentGameState = GameState.playing;
         player.rb.gravityScale = 2;
         enemySpawn.StartCoroutine(enemySpawn.InsEnemy());
+        cloudSpawn.StartCoroutine(cloudSpawn.InsCloud());
     }
 
      void RandomIndex()
@@ -78,7 +80,8 @@ public class GameManager : MonoBehaviour {
     public void RotateDoubleCircle(int index)
     {
         foreach (GameObject circle in tempCircleGropu)
-		{ Transform circlTransform = circle.transform;
+		{
+
             if(circle.tag == "DoubleCircle")
             {
                 switch (index)
@@ -86,25 +89,25 @@ public class GameManager : MonoBehaviour {
                     //同步双色环的目标颜色
                     case 0: //Cyan
                         Quaternion cyanRotation = Quaternion.Euler(0f, 0f, -45f);
-						circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
+						circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
                        
                         break;
 
                     case 1: //yellow
                         Quaternion yellowRotation = Quaternion.Euler(0f, 0f, 135f);
-					    circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
+					    circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
                         
                         break;
 
                     case 2: //magenta
                         Quaternion magentaRotation = Quaternion.Euler(0f, 0f, -135f);
-					    circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
+					    circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
                        
                         break;
 
                     case 3: //pink
                         Quaternion pinkRotation = Quaternion.Euler(0f, 0f, 45f);
-					    circlTransform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f); 
+					    circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f); 
                         break;
 
                 }
