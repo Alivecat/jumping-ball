@@ -15,9 +15,10 @@ public class Player : MonoBehaviour {
     [Range(1f, 10f)]
     public float slowness = 10f;        //死亡时慢动作速率
     public string currentColor;
-    public int scoreText;
     public bool setToNormalTrigger;
 	public float buffTime;
+	public int HP;
+	public float timeSpentInvincible;
 
     public Rigidbody2D rb;
 	public SpriteRenderer sr;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour {
     public AudioSource die;
     public Animator playerAnimator;
     public Animator eyesAnimator;
+	public GameObject mouse;
 
 	public Color colorCyan;
 	public Color colorYellow;
@@ -36,11 +38,11 @@ public class Player : MonoBehaviour {
 
     void Start ()
 	{
+		HP = 6;
         setToNormalTrigger = false;
         GM.RotateDoubleCircle(index);
         SetRandomColor();
         GM.currentGameState = 0;
-        SetScore();
 	}
 
 	void Update () {
@@ -68,6 +70,21 @@ public class Player : MonoBehaviour {
                     case PlayerState.penetration:
                         jump();
                         SetToNormalFunction();
+						
+                       /* timeSpentInvincible += Time.deltaTime; 
+
+                        if (timeSpentInvincible < 3f) { 
+	                        float remainder = timeSpentInvincible % 0.3f; 
+							//gameObject.GetComponents<SpriteRenderer>().
+						if(remainder <= 0.15f){
+						gameObject.transform.Translate (gameObject.transform.position.x, -100f, gameObject.transform.position.z);
+					}
+					//gameObject.SetActive(remainder > 0.15f); 
+						} 
+                        else { 
+					gameObject.transform.Translate (gameObject.transform.position.x, -35f, gameObject.transform.position.z);
+                        }*/
+                        
                         break;
                     case PlayerState.SlowerCircle:
                         jump();
@@ -96,11 +113,6 @@ public class Player : MonoBehaviour {
             eyesAnimator.SetTrigger("isJump");   //跳跃眼睛动画
             jumpSound.Play();
         }
-    }
-
-    public void SetScore()
-    {
-        GuiControl.Score.text = "Score: " + scoreText.ToString();
     }
 
 	void OnTriggerEnter2D (Collider2D col)
@@ -200,9 +212,15 @@ public class Player : MonoBehaviour {
 
     public void GameOver(int i)
     {
-        Debug.Log("GAME OVER!  : " + i);
-        GM.currentGameState = GameManager.GameState.gameover;
-        StartCoroutine(ReloadScene());
+		HP -= 2;
+		currentPlayerState = PlayerState.penetration;
+		StartCoroutine(SetToNormal(2f));
+
+		if (HP <= 0) {
+			Debug.Log ("gameover: " + i);
+			GM.currentGameState = GameManager.GameState.gameover;
+			StartCoroutine (ReloadScene ());
+		}
     }
 
     void ColorChanger(Collider2D col)
@@ -210,8 +228,6 @@ public class Player : MonoBehaviour {
         SetRandomColor();
         Destroy(col.gameObject);
         colorSwitch.Play();
-        scoreText++;
-        SetScore();
     }
 
     void SpawnPointEdge(Collider2D col)
@@ -239,10 +255,11 @@ public class Player : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    IEnumerator SetToNormal()
+	IEnumerator SetToNormal(float buffTime = 6f)
     {
 		yield return new WaitForSeconds(buffTime);
         currentPlayerState = PlayerState.Normal;
+		mouse.SetActive (true);
     }
 
 
@@ -274,6 +291,4 @@ public class Player : MonoBehaviour {
                 break;
 		}
 	}
-    
-     
 }

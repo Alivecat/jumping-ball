@@ -81,7 +81,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.05, y: 0.08}
@@ -121,6 +121,7 @@ MonoBehaviour:
   smoothing: 0
   player: {fileID: 0}
   eye: {fileID: 0}
+  mouse: {fileID: 0}
   animator: {fileID: 0}
 --- !u!212 &212502989672834600
 SpriteRenderer:
