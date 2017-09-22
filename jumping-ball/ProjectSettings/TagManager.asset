@@ -26,6 +26,8 @@ TagManager:
   - EatPoint
   - L_Cloud
   - R_Cloud
+  - L_Trigger
+  - R_Trigger
   layers:
   - Default
   - TransparentFX

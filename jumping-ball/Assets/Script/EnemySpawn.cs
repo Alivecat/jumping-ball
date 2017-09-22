@@ -44,10 +44,10 @@ public class EnemySpawn : MonoBehaviour {
     //GameManager中开始协程
 	public IEnumerator InsEnemy(){
 		while (true) {
-			//Debug.Log("EnemySpawn");
 			L_Or_R = Random.Range (0, 2); //0 -> left 1-> right
 			RandomLocSpawn ();
 			if (player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.SlowerCircle) {
+                
                 //SlowerCircle状态下怪物生成速度减半
                 yield return new WaitForSeconds (spawnTimer * 2f);
 			} else {
