@@ -8,7 +8,7 @@ public class CloudFly : MonoBehaviour {
 
     private void Start()
     {
-        speed = Random.Range(1, 3);
+        speed = Random.Range(1f, 3f);
         player = GameObject.Find("Player");
         StartCoroutine(CloudDie());
     }

@@ -11,13 +11,11 @@ public class GuiControl : MonoBehaviour {
 	public GameObject playerObj;
 	public Transform mainCameraTran;
 
-	private Transform playTran;
 
 	public float speed;
 
     void Start () {
 		mainCameraTran = GameObject.Find ("Main Camera").transform;
-		playTran = playerObj.transform;
 		HPbar.value = player.HP;
 	}
 
