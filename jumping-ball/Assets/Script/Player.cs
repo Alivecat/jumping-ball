@@ -70,21 +70,7 @@ public class Player : MonoBehaviour {
                     case PlayerState.penetration:
                         jump();
                         SetToNormalFunction();
-						
-                       /* timeSpentInvincible += Time.deltaTime; 
 
-                        if (timeSpentInvincible < 3f) { 
-	                        float remainder = timeSpentInvincible % 0.3f; 
-							//gameObject.GetComponents<SpriteRenderer>().
-						if(remainder <= 0.15f){
-						gameObject.transform.Translate (gameObject.transform.position.x, -100f, gameObject.transform.position.z);
-					}
-					//gameObject.SetActive(remainder > 0.15f); 
-						} 
-                        else { 
-					gameObject.transform.Translate (gameObject.transform.position.x, -35f, gameObject.transform.position.z);
-                        }*/
-                        
                         break;
                     case PlayerState.SlowerCircle:
                         jump();

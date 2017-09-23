@@ -12,6 +12,7 @@ public class Rotator : MonoBehaviour
 
     public GameObject GM;
     public GameObject player;
+    public Player playerCom;
     public GameObject insideCircle;
     public GameObject outsideCircle;
     public GameObject eye;
@@ -20,7 +21,8 @@ public class Rotator : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        colorIndex = player.GetComponent<Player>().index;
+        playerCom = player.GetComponent<Player>();
+        colorIndex = playerCom.index;
         GM = GameObject.Find("GameManager");
         
         if (this.tag == "InsideCircle")
@@ -37,7 +39,7 @@ public class Rotator : MonoBehaviour
 
     void Update()
     {
-        if (player.GetComponent<Player>().currentPlayerState == Player.PlayerState.SlowerCircle)
+        if (playerCom.currentPlayerState == Player.PlayerState.SlowerCircle)
         {
             //子弹时间内放慢速度
             transform.Rotate(0f, 0f, (speed * 0.5f) * Time.deltaTime);

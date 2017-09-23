@@ -9,23 +9,26 @@ public class EnemyFly : MonoBehaviour {
     public float smoothing;
 
     public GameObject player;
+    public Player playerCom;
     public GameObject eye;
 	public GameObject mouse;
     public Animator animator;
 
 	void Start(){
-		mouse = GameObject.Find ("EatPoint");
+        dieTime = 6f;
         smoothing = 5f;
         damage = true;
-        animator = gameObject.GetComponent<Animator>();
-        player = GameObject.Find("Player");
+
+        mouse = GameObject.Find ("EatPoint");       
+        player = GameObject.Find("Player");  
         eye = GameObject.Find("eye");
-        dieTime = 6f;
+        animator = gameObject.GetComponent<Animator>();
+        playerCom = player.GetComponent<Player>();
         StartCoroutine (EnemyDie());
 	}
 
 	void Update () {
-
+        //怪物左右飞行
 		if (player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.SlowerCircle) {
 			if (gameObject.transform.Find("tag").tag == "L_enemy") {
 				transform.Translate ((speed * 0.5f) * Time.deltaTime, 0f, 0f);
@@ -45,38 +48,29 @@ public class EnemyFly : MonoBehaviour {
 		}
 
 		if (!damage) {
-			/*if(isStatePOrI())
-			{
-				return;
-			}*/
+            //怪物飞入嘴中
 			gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, player.transform.position, smoothing * Time.deltaTime);
 		}
 	}
-
-    IEnumerator EnemyDie(float dieTime = 10f){
-		yield return new WaitForSeconds (dieTime);
-		GameObject.Destroy (gameObject);
-	}
-
 
     void OnTriggerEnter2D(Collider2D target)
     {
 
         if(target.tag == "Player")
         {
-            if(player.GetComponent<Player>().currentPlayerState == Player.PlayerState.penetration)
+            if(playerCom.currentPlayerState == Player.PlayerState.penetration)
             {
                 return;
             }
 
-            if(player.GetComponent<Player>().currentPlayerState == Player.PlayerState.Immortal)
+            if(playerCom.currentPlayerState == Player.PlayerState.Immortal)
             {
                 Destroy(gameObject);
             }
 
             if (damage)
             {
-                player.GetComponent<Player>().GameOver(1);
+                playerCom.GameOver(1);
             }
             
 
@@ -84,63 +78,25 @@ public class EnemyFly : MonoBehaviour {
 
         if(target.tag == "EatPoint")
         {
-            damage = false;
-			/*if(!isStatePOrI())
-			{*/
-				animator.SetTrigger("isDie");
-				StartCoroutine(EnemyDie(0.5f));
-				speed = 1f;
-			//}
-            
-
-            
-            
+            damage = false; //怪物是否可造成伤害
+			animator.SetTrigger("isDie");
+			StartCoroutine(EnemyDie(0.5f));
+			speed = 1f; // 死亡小怪减速飞入嘴中
 
             switch (gameObject.tag)
             {
 
 			case "ImmortalEnemy":
-				
-				/*if(isStatePOrI())
-				{
-					break;
-				}*/
-				mouse.SetActive (false);
-                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.Immortal;
-                    player.GetComponent<Player>().setToNormalTrigger = true;
-                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
+                    SetBuff(true, Player.PlayerState.Immortal, false, true);
                     break;
                 case "NormalEnemy":
-				
-				/*if(isStatePOrI())
-				{
-					break;
-				}*/
-
-                    player.GetComponent<Player>().HP++;
-                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
+                    SetBuff(false, Player.PlayerState.Normal, true, false);
                     break;
                 case "PenetrationEnemy":
-				mouse.SetActive (false);
-				/*if(isStatePOrI())
-				{
-					break;
-				}*/
-
-                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.penetration;
-                    player.GetComponent<Player>().setToNormalTrigger = true;
-                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
+                    SetBuff(true, Player.PlayerState.penetration, false, true);
                     break;
                 case "SlowMotionEnemy":
-
-				/*if(isStatePOrI())
-				{
-					break;
-				}*/
-
-                    player.GetComponent<Player>().currentPlayerState = Player.PlayerState.SlowerCircle;
-                    player.GetComponent<Player>().setToNormalTrigger = true;
-                    player.GetComponent<Player>().playerAnimator.SetTrigger("isEatting");
+                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true);
                     break;
             }
             
@@ -149,9 +105,38 @@ public class EnemyFly : MonoBehaviour {
 
     }
 
-	bool isStatePOrI(){
-		return player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.penetration
-		|| player.GetComponent<Player> ().currentPlayerState == Player.PlayerState.Immortal;
+    IEnumerator EnemyDie(float dieTime = 10f)
+    {
+        yield return new WaitForSeconds(dieTime);
+        GameObject.Destroy(gameObject);
+    }
+
+    bool isStatePOrI(){
+		return playerCom.currentPlayerState == Player.PlayerState.penetration
+		|| playerCom.currentPlayerState == Player.PlayerState.Immortal;
 	}
-    
+
+    void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger)
+    {   
+        if (addBUff)
+        {   //切换player当前状态
+            playerCom.currentPlayerState = state;
+        }
+        
+        if (addHp)
+        {   //是否加HP
+            if (playerCom.HP < 6)
+            {
+                playerCom.HP++;
+            }
+            Debug.Log("Full HP");
+            
+        }
+
+        //是否需要恢复默认状态
+        playerCom.setToNormalTrigger = NormalTrigger;
+
+        //触发player吃东西动画
+        playerCom.playerAnimator.SetTrigger("isEatting");
+    }
 }
