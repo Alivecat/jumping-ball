@@ -86,8 +86,8 @@ public class EnemyFly : MonoBehaviour {
 
             switch (gameObject.tag)
             {
-
-			case "ImmortalEnemy":
+                //bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool playAnimation
+                case "ImmortalEnemy":
                     SetBuff(true, Player.PlayerState.Immortal, false, true, false, false, true);
                     break;
                 case "NormalEnemy":
@@ -120,7 +120,7 @@ public class EnemyFly : MonoBehaviour {
 
     public void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool playAnimation)
     {
-
+        playerCom.ReIgnoreCollisionTrigger = true;
         if (addBUff)
         {   //切换player当前状态
             playerCom.currentPlayerState = state;

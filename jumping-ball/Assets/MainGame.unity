@@ -380,48 +380,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1001 &386848047
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -32.417107
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4375901125707334, guid: ef15078f48ed65947968f5432478775b, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: ef15078f48ed65947968f5432478775b, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &411798079
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +479,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -535,7 +493,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6.5, y: 3.5}
+  m_Size: {x: 5.76, y: 3.3}
   m_EdgeRadius: 0
 --- !u!1 &416960254
 GameObject:
@@ -570,7 +528,7 @@ Transform:
   - {fileID: 1398406748}
   - {fileID: 316351682}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &479987023
 GameObject:
@@ -598,7 +556,7 @@ Transform:
   m_GameObject: {fileID: 479987023}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 20, z: 0}
-  m_LocalScale: {x: 22, y: 0.099999994, z: 1}
+  m_LocalScale: {x: 22, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 1982783409}
   m_RootOrder: 0
@@ -806,7 +764,7 @@ Transform:
   m_GameObject: {fileID: 812084488}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 20, z: 0}
-  m_LocalScale: {x: 22, y: 0.099999994, z: 1}
+  m_LocalScale: {x: 22, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 1967498803}
   m_RootOrder: 0
@@ -975,7 +933,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1033755441
 MonoBehaviour:
@@ -1330,7 +1288,7 @@ Transform:
   - {fileID: 1325887529}
   - {fileID: 1959174404}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1304181407
 MonoBehaviour:
@@ -1436,7 +1394,7 @@ RectTransform:
   - {fileID: 88499769}
   - {fileID: 1214075263}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1588,7 +1546,7 @@ Transform:
   m_GameObject: {fileID: 1515328134}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 20, z: 0}
-  m_LocalScale: {x: 22, y: 0.099999994, z: 1}
+  m_LocalScale: {x: 22, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 1678290497}
   m_RootOrder: 0
@@ -1802,7 +1760,7 @@ Transform:
   m_Children:
   - {fileID: 1515328135}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1704125781
 GameObject:
@@ -2126,7 +2084,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1928061303}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.91, z: 0}
+  m_LocalPosition: {x: 0, y: 1.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 2124206074}
@@ -2144,7 +2102,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.44}
+  m_Offset: {x: 0, y: 1.57}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2289,7 +2247,7 @@ Transform:
   m_Children:
   - {fileID: 812084489}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1982783408
 GameObject:
@@ -2320,7 +2278,7 @@ Transform:
   m_Children:
   - {fileID: 479987024}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2006067184
 GameObject:
@@ -2382,7 +2340,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2041493575
 GameObject:
@@ -2603,14 +2561,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 7.5
-  currentPlayerState: 1
+  currentPlayerState: 0
   index: 0
   slowness: 10
   currentColor: 
   setToNormalTrigger: 0
+  ReIgnoreCollisionTrigger: 0
   buffTime: 6
   HP: 6
   timeSpentInvincible: 0
+  enemyBuffP: 0
   rb: {fileID: 2124206071}
   sr: {fileID: 2124206073}
   GM: {fileID: 1033755439}
@@ -2620,7 +2580,11 @@ MonoBehaviour:
   die: {fileID: 2124206077}
   playerAnimator: {fileID: 2124206078}
   eyesAnimator: {fileID: 411798082}
-  mouse: {fileID: 1928061303}
+  eye: {fileID: 411798079}
+  eatPoint: {fileID: 1928061303}
+  bodySprite: {fileID: 2124206073}
+  eyesSprite: {fileID: 411798081}
+  mouthSprite: {fileID: 1831772060}
   colorCyan: {r: 0, g: 0.76470596, b: 0.91372555, a: 1}
   colorYellow: {r: 1, g: 0.8705883, b: 0.24705884, a: 1}
   colorMagenta: {r: 0.5686275, g: 0.027450982, b: 0.5176471, a: 1}
@@ -2656,7 +2620,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 035da4dcec2e1ec4981e0559d11eb076, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

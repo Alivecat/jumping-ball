@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour {
     {
         //将刷新点上移
         spawnPoint.transform.position = new Vector3(0f, spawnPoint.transform.position.y + spawnPointChangeOffset.y, spawnPoint.transform.position.z);
+        Debug.Log(spawnPoint.transform.position);
         InsObject(spawnPoint);
     }
 

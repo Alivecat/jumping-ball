@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public float slowness = 10f;        //死亡时慢动作速率
     public string currentColor;
     public bool setToNormalTrigger;
+    public bool ReIgnoreCollisionTrigger;
     public float buffTime;
     public int HP;
     public float timeSpentInvincible;
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
     private float blinkCountI;
     void Start()
     {
+        ReIgnoreCollisionTrigger = false;
         lastTime = Time.time;
         HP = 6;
         blinkCountI = 0;
@@ -224,7 +226,7 @@ public class Player : MonoBehaviour
         }
 
         SetBuff(true, PlayerState.penetration, false, true, true, false, false);
-
+        ReIgnoreCollisionTrigger = true;
 
         if (HP <= 0)
         {
@@ -279,6 +281,7 @@ public class Player : MonoBehaviour
         if (eatPoint.GetComponent<BoxCollider2D>() == false)
         {
             eatPoint.AddComponent<BoxCollider2D>().isTrigger = true;
+            
         }
         bodySprite.sortingOrder = 0;
         eyesSprite.sortingOrder = 2;
