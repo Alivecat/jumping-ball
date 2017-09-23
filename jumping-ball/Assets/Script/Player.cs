@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
-	public float jumpForce = 7.5f;      //跳跃的力度
+    public float jumpForce = 7.5f;      //跳跃的力度
 
     public enum PlayerState { Normal, Immortal, SlowerCircle, penetration };  //玩家状态
     public PlayerState currentPlayerState;                                    //玩家当前状态
@@ -16,12 +17,13 @@ public class Player : MonoBehaviour {
     public float slowness = 10f;        //死亡时慢动作速率
     public string currentColor;
     public bool setToNormalTrigger;
-	public float buffTime;
-	public int HP;
-	public float timeSpentInvincible;
+    public float buffTime;
+    public int HP;
+    public float timeSpentInvincible;
+    public bool enemyBuffP;
 
     public Rigidbody2D rb;
-	public SpriteRenderer sr;
+    public SpriteRenderer sr;
     public GameManager GM;
     public GuiControl GuiControl;
     public AudioSource jumpSound;
@@ -29,23 +31,33 @@ public class Player : MonoBehaviour {
     public AudioSource die;
     public Animator playerAnimator;
     public Animator eyesAnimator;
-	public GameObject mouse;
+    public GameObject eye;
+    public GameObject eatPoint;
+    public SpriteRenderer bodySprite;
+    public SpriteRenderer eyesSprite;
+    public SpriteRenderer mouthSprite;
+    [Space]
+    public Color colorCyan;
+    public Color colorYellow;
+    public Color colorMagenta;
+    public Color colorPink;
 
-	public Color colorCyan;
-	public Color colorYellow;
-	public Color colorMagenta;
-	public Color colorPink;
-
-    void Start ()
-	{
-		HP = 6;
+    private float lastTime;
+    private float curTime;
+    private float blinkCountI;
+    void Start()
+    {
+        lastTime = Time.time;
+        HP = 6;
+        blinkCountI = 0;
         setToNormalTrigger = false;
         GM.RotateDoubleCircle(index);
         SetRandomColor();
         GM.currentGameState = 0;
-	}
+    }
 
-	void Update () {
+    void Update()
+    {
         GuiControl.State.text = currentPlayerState.ToString();
         GM.RotateDoubleCircle(index);
         switch (GM.currentGameState)
@@ -71,21 +83,28 @@ public class Player : MonoBehaviour {
                         jump();
                         SetToNormalFunction();
 
+                        curTime = Time.time;
+                        if (curTime - lastTime >= 0.1f)
+                        {
+                            Blink(enemyBuffP);
+                            lastTime = curTime;
+                        }
+
                         break;
                     case PlayerState.SlowerCircle:
                         jump();
                         SetToNormalFunction();
                         break;
                 }
-        return;
+                return;
         }
     }
 
-    void SetToNormalFunction()
+    void SetToNormalFunction(float buffTime = 6f)
     {
         if (currentPlayerState != PlayerState.Normal && setToNormalTrigger)
         {
-            StartCoroutine(SetToNormal());
+            StartCoroutine(SetToNormal(buffTime));
             setToNormalTrigger = false;
         }
     }
@@ -101,12 +120,12 @@ public class Player : MonoBehaviour {
         }
     }
 
-	void OnTriggerEnter2D (Collider2D col)
-	{
+    void OnTriggerEnter2D(Collider2D col)
+    {
         if (GM.currentGameState != 0)
         {
             //Normal状态
-            if(currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
+            if (currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
             {
                 if (col.tag == "ColorChanger")
                 {
@@ -114,7 +133,7 @@ public class Player : MonoBehaviour {
                     return;
                 }
 
-				if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                if (col.tag != currentColor || col.tag == "EdgeTrigger")
                 {
                     if (col.tag == "SpawnPointEdge")
                     {
@@ -124,7 +143,7 @@ public class Player : MonoBehaviour {
 
                     //检测触发器物体后4个tag字母是否为nemy，判断是否为Enemy
                     //检测4个字母是为了不引发碰到tag短于5个字母引发的ArgumentOutOfRangeException
-                    if (col.tag.Substring(col.tag.Length - 4,4) == "nemy")
+                    if (col.tag.Substring(col.tag.Length - 4, 4) == "nemy")
                     {
                         return;
                     }
@@ -193,20 +212,26 @@ public class Player : MonoBehaviour {
                 }
             }
 
-        }  
-	}
+        }
+    }
 
     public void GameOver(int i)
     {
-		HP -= 2;
-		currentPlayerState = PlayerState.penetration;
-		StartCoroutine(SetToNormal(2f));
+        if (currentPlayerState != PlayerState.penetration || currentPlayerState != PlayerState.Immortal)
+        {
+            Debug.Log("-HP");
+            HP -= 2;
+        }
 
-		if (HP <= 0) {
-			Debug.Log ("gameover: " + i);
-			GM.currentGameState = GameManager.GameState.gameover;
-			StartCoroutine (ReloadScene ());
-		}
+        SetBuff(true, PlayerState.penetration, false, true, true, false, false);
+
+
+        if (HP <= 0)
+        {
+            Debug.Log("gameover: " + i);
+            GM.currentGameState = GameManager.GameState.gameover;
+            StartCoroutine(ReloadScene());
+        }
     }
 
     void ColorChanger(Collider2D col)
@@ -222,7 +247,7 @@ public class Player : MonoBehaviour {
         GM.MoveSpawn(col.transform.parent.gameObject);
     }
 
-    
+
 
     IEnumerator SetTriggerTrue(Collider2D col)
     {
@@ -241,41 +266,117 @@ public class Player : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-	IEnumerator SetToNormal(float buffTime = 6f)
+    IEnumerator SetToNormal(float buffTime = 6f)
     {
-		yield return new WaitForSeconds(buffTime);
+        yield return new WaitForSeconds(buffTime);
         currentPlayerState = PlayerState.Normal;
-		mouse.SetActive (true);
+        blinkCountI = 0;
+        enemyBuffP = false;
+        if (eye.tag != "Player")
+        {
+            eye.tag = "Player";
+        }
+        if (eatPoint.GetComponent<BoxCollider2D>() == false)
+        {
+            eatPoint.AddComponent<BoxCollider2D>().isTrigger = true;
+        }
+        bodySprite.sortingOrder = 0;
+        eyesSprite.sortingOrder = 2;
+        mouthSprite.sortingOrder = 3;
     }
 
+    void Blink(bool isBuff)
+    {
+        blinkCountI++;
+        float times = 28;
+        if (isBuff)
+        {
+            times = 58;
+        }
 
-    void SetRandomColor ()
-	{
+         if(blinkCountI <= times)
+        {
+            if (bodySprite.sortingOrder != -10)
+            {
+                bodySprite.sortingOrder = -10;
+                eyesSprite.sortingOrder = -10;
+                mouthSprite.sortingOrder = -10;
+            }
+            else
+            {
+                bodySprite.sortingOrder = 0;
+                eyesSprite.sortingOrder = 2;
+                mouthSprite.sortingOrder = 3;
+            }
+
+        }
+        
+    }
+
+    void SetRandomColor()
+    {
         index = Random.Range(0, 4);
         switch (index)
-		{
-			case 0:
-				currentColor = "Cyan";
-				sr.color = colorCyan;
+        {
+            case 0:
+                currentColor = "Cyan";
+                sr.color = colorCyan;
                 gameObject.tag = "Cyan";
 
                 break;
-			case 1:
-				currentColor = "Yellow";
-				sr.color = colorYellow;
+            case 1:
+                currentColor = "Yellow";
+                sr.color = colorYellow;
                 gameObject.tag = "Yellow";
                 break;
-			case 2:
-				currentColor = "Magenta";
-				sr.color = colorMagenta;
+            case 2:
+                currentColor = "Magenta";
+                sr.color = colorMagenta;
                 gameObject.tag = "Magenta";
                 break;
-			case 3:
-				currentColor = "Pink";
-				sr.color = colorPink;
+            case 3:
+                currentColor = "Pink";
+                sr.color = colorPink;
                 gameObject.tag = "Pink";
                 break;
-		}
-	}
+        }
+    }
 
+    public void SetBuff(bool addBUff, PlayerState state, bool addHp, bool NormalTrigger, bool ignoreEnemy, bool canEat, bool playAnimation)
+    {
+        if (addBUff)
+        {   //切换player当前状态
+            currentPlayerState = state;
+        }
+
+        if (addHp)
+        {   //是否加HP
+            if (HP < 6)
+            {
+                HP++;
+            }
+            Debug.Log("Full HP");
+
+        }
+
+        if (ignoreEnemy)
+        {
+            eye.tag = "Untagged";
+        }
+
+        if (!canEat)
+        {
+            GameObject.Destroy(eatPoint.GetComponent<BoxCollider2D>());
+        }
+
+        //恢复默认状态
+        StartCoroutine(SetToNormal(2f));
+  
+        //触发player吃东西动画
+        if (playAnimation)
+        {
+            playerAnimator.SetTrigger("isEatting");
+        }
+
+    }
 }

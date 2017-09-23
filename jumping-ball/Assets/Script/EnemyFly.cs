@@ -5,21 +5,21 @@ using UnityEngine;
 public class EnemyFly : MonoBehaviour {
 	public float speed;
     public float dieTime;
-    public bool damage;
+    public bool canDamage;
     public float smoothing;
 
     public GameObject player;
     public Player playerCom;
     public GameObject eye;
-	public GameObject mouse;
+	public GameObject eatPoint;
     public Animator animator;
 
 	void Start(){
         dieTime = 6f;
         smoothing = 5f;
-        damage = true;
+        canDamage = true;
 
-        mouse = GameObject.Find ("EatPoint");       
+        eatPoint = GameObject.Find ("EatPoint");       
         player = GameObject.Find("Player");  
         eye = GameObject.Find("eye");
         animator = gameObject.GetComponent<Animator>();
@@ -47,7 +47,7 @@ public class EnemyFly : MonoBehaviour {
 
 		}
 
-		if (!damage) {
+		if (!canDamage) {
             //怪物飞入嘴中
 			gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, player.transform.position, smoothing * Time.deltaTime);
 		}
@@ -58,19 +58,19 @@ public class EnemyFly : MonoBehaviour {
 
         if(target.tag == "Player")
         {
-            if(playerCom.currentPlayerState == Player.PlayerState.penetration)
-            {
-                return;
-            }
-
             if(playerCom.currentPlayerState == Player.PlayerState.Immortal)
             {
-                Destroy(gameObject);
+                
+                speed = 0;
+                animator.SetTrigger("isDie");
+                StartCoroutine(EnemyDie(1f));
             }
 
-            if (damage)
+            if (canDamage && playerCom.currentPlayerState != Player.PlayerState.Immortal)
             {
                 playerCom.GameOver(1);
+                SetBuff(true, Player.PlayerState.penetration, false, true, true, false, false);
+
             }
             
 
@@ -78,7 +78,8 @@ public class EnemyFly : MonoBehaviour {
 
         if(target.tag == "EatPoint")
         {
-            damage = false; //怪物是否可造成伤害
+
+            canDamage = false; //怪物是否可造成伤害
 			animator.SetTrigger("isDie");
 			StartCoroutine(EnemyDie(0.5f));
 			speed = 1f; // 死亡小怪减速飞入嘴中
@@ -87,16 +88,17 @@ public class EnemyFly : MonoBehaviour {
             {
 
 			case "ImmortalEnemy":
-                    SetBuff(true, Player.PlayerState.Immortal, false, true);
+                    SetBuff(true, Player.PlayerState.Immortal, false, true, false, false, true);
                     break;
                 case "NormalEnemy":
-                    SetBuff(false, Player.PlayerState.Normal, true, false);
+                    SetBuff(false, Player.PlayerState.Normal, true, false, false, true, true);
                     break;
                 case "PenetrationEnemy":
-                    SetBuff(true, Player.PlayerState.penetration, false, true);
+                    SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true);
+                    playerCom.enemyBuffP = true;
                     break;
                 case "SlowMotionEnemy":
-                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true);
+                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true,true);
                     break;
             }
             
@@ -116,8 +118,9 @@ public class EnemyFly : MonoBehaviour {
 		|| playerCom.currentPlayerState == Player.PlayerState.Immortal;
 	}
 
-    void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger)
-    {   
+    public void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool playAnimation)
+    {
+
         if (addBUff)
         {   //切换player当前状态
             playerCom.currentPlayerState = state;
@@ -133,10 +136,26 @@ public class EnemyFly : MonoBehaviour {
             
         }
 
+        if (ignoreEnemy)
+        {
+            eye.tag = "Untagged";
+        }
+
+        if (!canEat)
+        {
+            GameObject.Destroy(eatPoint.GetComponent<BoxCollider2D>());
+        }
+       
         //是否需要恢复默认状态
         playerCom.setToNormalTrigger = NormalTrigger;
 
         //触发player吃东西动画
-        playerCom.playerAnimator.SetTrigger("isEatting");
+        if (playAnimation)
+        {
+            playerCom.playerAnimator.SetTrigger("isEatting");
+        }
+        
     }
+
+
 }

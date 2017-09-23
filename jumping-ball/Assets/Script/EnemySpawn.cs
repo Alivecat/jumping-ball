@@ -30,12 +30,15 @@ public class EnemySpawn : MonoBehaviour {
         if (L_Or_R == 0) {	
 			pos = L_EnemySpawnPoint.transform.position;
 			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-1, 8), pos.z);
-			currentEnemy = Instantiate (Enemy_L[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+            
+            currentEnemy = Instantiate(Enemy_L[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+
             currentEnemy.transform.Find("tag").tag = "L_enemy";
 		} else {
 			pos = R_EnemySpawnPoint.transform.position;
 			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-8, 8), pos.z);
-			currentEnemy = Instantiate (Enemy_R[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+            
+            currentEnemy = Instantiate (Enemy_R[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
             currentEnemy.transform.Find("tag").tag = "R_enemy";
             
         }
