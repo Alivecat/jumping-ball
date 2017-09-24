@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     [Space]
     public int randomIndex;                     
 
-    public enum GameState { gameover, playing };    //游戏状态
+    public enum GameState { gameover, playing, boss };    //游戏状态
     public GameState currentGameState;
 
     public Player player;
@@ -66,9 +66,17 @@ public class GameManager : MonoBehaviour {
 
     public void MoveSpawn(GameObject spawnPoint)
     {
+        // 260高之后触发boss战
+        if (spawnPoint.transform.position.y + spawnPointChangeOffset.y > 220f)
+        {
+            enemySpawn.min = 2;
+            enemySpawn.max = 5;
+            currentGameState = GameState.boss;
+            Debug.Log("start boss battle");
+            return;
+        }
         //将刷新点上移
         spawnPoint.transform.position = new Vector3(0f, spawnPoint.transform.position.y + spawnPointChangeOffset.y, spawnPoint.transform.position.z);
-        Debug.Log(spawnPoint.transform.position);
         InsObject(spawnPoint);
     }
 
@@ -82,39 +90,44 @@ public class GameManager : MonoBehaviour {
     {
         foreach (GameObject circle in tempCircleGropu)
 		{
-
-            if(circle.tag == "DoubleCircle")
-            {
-                switch (index)
+                if(circle == null)
                 {
-                    //同步双色环的目标颜色
-                    case 0: //Cyan
-                        Quaternion cyanRotation = Quaternion.Euler(0f, 0f, -45f);
-						circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime* 2f);
-                       
-                        break;
-
-                    case 1: //yellow
-                        Quaternion yellowRotation = Quaternion.Euler(0f, 0f, 135f);
-					    circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime* 2f);
-                        
-                        break;
-
-                    case 2: //magenta
-                        Quaternion magentaRotation = Quaternion.Euler(0f, 0f, -135f);
-					    circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime* 2f);
-                       
-                        break;
-
-                    case 3: //pink
-                        Quaternion pinkRotation = Quaternion.Euler(0f, 0f, 45f);
-					    circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime* 1.5f); 
-                        break;
-
+                    return;
                 }
+
+                if (circle.tag == "DoubleCircle")
+                {
+                    switch (index)
+                    {
+                        //同步双色环的目标颜色
+                        case 0: //Cyan
+                            Quaternion cyanRotation = Quaternion.Euler(0f, 0f, -45f);
+                            circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, cyanRotation, Time.deltaTime * 2f);
+
+                            break;
+
+                        case 1: //yellow
+                            Quaternion yellowRotation = Quaternion.Euler(0f, 0f, 135f);
+                            circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, yellowRotation, Time.deltaTime * 2f);
+
+                            break;
+
+                        case 2: //magenta
+                            Quaternion magentaRotation = Quaternion.Euler(0f, 0f, -135f);
+                            circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, magentaRotation, Time.deltaTime * 2f);
+
+                            break;
+
+                        case 3: //pink
+                            Quaternion pinkRotation = Quaternion.Euler(0f, 0f, 45f);
+                            circle.transform.rotation = Quaternion.Slerp(circle.transform.rotation, pinkRotation, Time.deltaTime * 1.5f);
+                            break;
+
+                    }
+                }
+            
             }
         }
 			
     }
 
-}

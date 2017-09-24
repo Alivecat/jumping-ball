@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyFly : MonoBehaviour {
 	public float speed;
-    public float dieTime;
     public bool canDamage;
     public float smoothing;
 
@@ -15,7 +14,6 @@ public class EnemyFly : MonoBehaviour {
     public Animator animator;
 
 	void Start(){
-        dieTime = 6f;
         smoothing = 5f;
         canDamage = true;
 
@@ -98,7 +96,10 @@ public class EnemyFly : MonoBehaviour {
                     playerCom.enemyBuffP = true;
                     break;
                 case "SlowMotionEnemy":
-                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true,true);
+                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true, true);
+                    break;
+                case "StingEnemy":
+                    SetBuff(true, Player.PlayerState.Sting, false, true, false, false, true);
                     break;
             }
             
@@ -113,10 +114,10 @@ public class EnemyFly : MonoBehaviour {
         GameObject.Destroy(gameObject);
     }
 
-    bool isStatePOrI(){
+    /*bool isStatePOrI(){
 		return playerCom.currentPlayerState == Player.PlayerState.penetration
 		|| playerCom.currentPlayerState == Player.PlayerState.Immortal;
-	}
+	}*/
 
     public void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool playAnimation)
     {
@@ -137,11 +138,13 @@ public class EnemyFly : MonoBehaviour {
             
         }
 
+        //是否穿透（同时无视敌人）
         if (ignoreEnemy)
         {
             eye.tag = "Untagged";
         }
 
+        //是否可以吃怪 canEat == true 时可以吃
         if (!canEat)
         {
             GameObject.Destroy(eatPoint.GetComponent<BoxCollider2D>());

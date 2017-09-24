@@ -18,6 +18,9 @@ public class EnemySpawn : MonoBehaviour {
 	public Vector3 pos;
     public float spawnTimer;
 
+    public int min;
+    public int max;
+
 	void Start () {
 		player = GameObject.Find("Player");
         //间隔spawnTimer时间生成小怪
@@ -31,14 +34,14 @@ public class EnemySpawn : MonoBehaviour {
 			pos = L_EnemySpawnPoint.transform.position;
 			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-1, 8), pos.z);
             
-            currentEnemy = Instantiate(Enemy_L[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+            currentEnemy = Instantiate(Enemy_L[RandomIndex(min,max)], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
 
             currentEnemy.transform.Find("tag").tag = "L_enemy";
 		} else {
 			pos = R_EnemySpawnPoint.transform.position;
 			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-8, 8), pos.z);
             
-            currentEnemy = Instantiate (Enemy_R[RandomIndex()], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+            currentEnemy = Instantiate (Enemy_R[RandomIndex(min,max)], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
             currentEnemy.transform.Find("tag").tag = "R_enemy";
             
         }
@@ -61,9 +64,9 @@ public class EnemySpawn : MonoBehaviour {
 
 	}
 
-    int RandomIndex()
+    int RandomIndex(int min, int max)
     {
-        return Random.Range(0, 4);
+        return Random.Range(min, max);
     }
 
 }

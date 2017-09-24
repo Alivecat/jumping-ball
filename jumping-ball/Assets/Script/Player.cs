@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     public float jumpForce = 7.5f;      //跳跃的力度
 
-    public enum PlayerState { Normal, Immortal, SlowerCircle, penetration };  //玩家状态
+    public enum PlayerState { Normal, Immortal, SlowerCircle, penetration, Sting };  //玩家状态
     public PlayerState currentPlayerState;                                    //玩家当前状态
 
     public int index;
@@ -70,7 +70,7 @@ public class Player : MonoBehaviour
             case GameManager.GameState.gameover:
                 rb.gravityScale = 0;
                 return;
-
+            case GameManager.GameState.boss:
             case GameManager.GameState.playing:
                 //人物状态机
                 switch (currentPlayerState)
@@ -259,6 +259,11 @@ public class Player : MonoBehaviour
 
     void SpawnPointEdge(Collider2D col)
     {
+        if(GM.currentGameState == GameManager.GameState.boss)
+        {
+            GM.DestoryCycle(col.transform.parent.gameObject);
+            return;
+        }
         GM.DestoryCycle(col.transform.parent.gameObject);
         GM.MoveSpawn(col.transform.parent.gameObject);
     }
@@ -279,6 +284,7 @@ public class Player : MonoBehaviour
         Time.timeScale = 1f / slowness;
         Time.fixedDeltaTime = Time.fixedDeltaTime / slowness;
         bodySprite.color = new Color(255f, 255f, 255, 0f);
+        eyesSprite.color = new Color(255f, 255f, 255, 0f);
         yield return new WaitForSeconds(4f / slowness);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
@@ -300,9 +306,9 @@ public class Player : MonoBehaviour
             eatPoint.AddComponent<BoxCollider2D>().isTrigger = true;
             
         }
-        bodySprite.sortingOrder = 0;
-        eyesSprite.sortingOrder = 2;
-        mouthSprite.sortingOrder = 3;
+        bodySprite.sortingOrder = 10;
+        eyesSprite.sortingOrder = 12;
+        mouthSprite.sortingOrder = 13;
     }
 
     void Blink(bool isBuff)
@@ -324,9 +330,9 @@ public class Player : MonoBehaviour
             }
             else
             {
-                bodySprite.sortingOrder = 0;
-                eyesSprite.sortingOrder = 2;
-                mouthSprite.sortingOrder = 3;
+                bodySprite.sortingOrder = 10;
+                eyesSprite.sortingOrder = 12;
+                mouthSprite.sortingOrder = 13;
             }
 
         }

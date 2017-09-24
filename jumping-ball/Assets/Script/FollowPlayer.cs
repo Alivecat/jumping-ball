@@ -5,15 +5,32 @@ public class FollowPlayer : MonoBehaviour {
 	public Transform player;
     public float smoothing;
     public Vector3 targetPos;
+    public bool fixation = false;
 
-	void FixedUpdate ()
+
+    void FixedUpdate ()
 	{
-		if (player.position.y > transform.position.y)
-		{
-            targetPos = new Vector3(transform.position.x, player.position.y, transform.position.z);
-            transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
-           
+        if(fixation == false)
+        {
+            if (player.position.y > transform.position.y)
+            {
+                targetPos = new Vector3(transform.position.x, player.position.y, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
+
+            }
+
+            if (player.position.y >= 230f)
+            {
+                targetPos = new Vector3(transform.position.x, 233f, transform.position.z);
+                transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
+            }
         }
+
+        if(transform.position.y >= 233)
+        {
+            fixation = true;
+        }
+		
 	}
 
 }

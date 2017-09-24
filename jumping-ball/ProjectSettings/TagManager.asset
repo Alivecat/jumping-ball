@@ -28,6 +28,9 @@ TagManager:
   - R_Cloud
   - L_Trigger
   - R_Trigger
+  - StingEnemy
+  - Boss
+  - Sting
   layers:
   - Default
   - TransparentFX
