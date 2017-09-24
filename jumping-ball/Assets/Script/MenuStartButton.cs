@@ -9,7 +9,7 @@ public class MenuStartButton : MonoBehaviour {
 
     public void ScenceChange()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("LevelSelect");
     }
 
     public void ShowStartButton()

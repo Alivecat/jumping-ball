@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer eyesSprite;
     public SpriteRenderer mouthSprite;
     public ParticleSystem juice;
+    public Sprite empty;
 
     [Space]
     public Color colorCyan;
@@ -241,16 +242,19 @@ public class Player : MonoBehaviour
     void ColorChanger(Collider2D col)
     {
         Color particleCloor = SetRandomColor();
-        var colorOL = juice.colorOverLifetime;
-
-        Gradient grad = new Gradient();
-        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(particleCloor, 0.0f), new GradientColorKey(new Color(200,255,192), 1.0f) }, 
-            new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
-        colorOL.color = grad;
-
+        particleColorSet(particleCloor);
         juice.Play();
         Destroy(col.gameObject);
         colorSwitch.Play();   
+    }
+
+    void particleColorSet(Color particleCloor)
+    {
+        var colorOL = juice.colorOverLifetime;
+        Gradient grad = new Gradient();
+        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(particleCloor, 0.0f), new GradientColorKey(new Color(200, 255, 192), 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
+        colorOL.color = grad;
     }
 
     void SpawnPointEdge(Collider2D col)
@@ -269,10 +273,13 @@ public class Player : MonoBehaviour
 
     IEnumerator ReloadScene()
     {
+        particleColorSet(GetCurrentColor());
+        juice.Play();
         die.Play();
         Time.timeScale = 1f / slowness;
         Time.fixedDeltaTime = Time.fixedDeltaTime / slowness;
-        yield return new WaitForSeconds(1f / slowness);
+        bodySprite.color = new Color(255f, 255f, 255, 0f);
+        yield return new WaitForSeconds(4f / slowness);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -353,6 +360,22 @@ public class Player : MonoBehaviour
                 currentColor = "Pink";
                 sr.color = colorPink;
                 gameObject.tag = "Pink";
+                return colorPink;
+        }
+        return Color.red;
+    }
+
+    Color GetCurrentColor()
+    {
+        switch (currentColor)
+        {
+            case "Cyan":
+                return colorCyan;
+            case "Yellow":
+                return colorYellow;
+            case "Magenta":
+                return colorMagenta;
+            case "Pink":
                 return colorPink;
         }
         return Color.red;

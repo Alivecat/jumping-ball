@@ -9,5 +9,11 @@ EditorBuildSettings:
     path: Assets/MainMenu.unity
     guid: 862eb13b6c06e344faee87a650e62d6a
   - enabled: 1
-    path: Assets/MainGame.unity
+    path: Assets/LevelSelect.unity
+    guid: 2f43c92599f3b8f4387c36d5111f9611
+  - enabled: 1
+    path: Assets/Level1.unity
     guid: a49db7f0c205bc74384591bf6768a6ec
+  - enabled: 1
+    path: Assets/Level1_Endless.unity
+    guid: 1c5dad169de373b49bef6fb3d18d621b
