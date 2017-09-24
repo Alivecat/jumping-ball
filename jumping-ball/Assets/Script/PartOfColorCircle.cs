@@ -27,7 +27,6 @@ public class PartOfColorCircle : MonoBehaviour {
     {
         if (playerCom.ReIgnoreCollisionTrigger)
         {
-            
             Physics2D.IgnoreCollision(thisCollider2D, eye, true);
             Physics2D.IgnoreCollision(thisCollider2D, eatPoint, true);
             playerCom.ReIgnoreCollisionTrigger = false;

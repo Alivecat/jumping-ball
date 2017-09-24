@@ -22,7 +22,7 @@ public class GuiControl : MonoBehaviour {
 
 	void Update () {
 		HPbar.value = Mathf.Lerp(HPbar.value, player.HP/6f, speed * Time.deltaTime);
-		Score.text = (mainCameraTran.position.y).ToString("F2") + " M";
+		Score.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
 
 	}
 

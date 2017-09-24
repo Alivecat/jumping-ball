@@ -37,6 +37,8 @@ public class Player : MonoBehaviour
     public SpriteRenderer bodySprite;
     public SpriteRenderer eyesSprite;
     public SpriteRenderer mouthSprite;
+    public ParticleSystem juice;
+
     [Space]
     public Color colorCyan;
     public Color colorYellow;
@@ -238,9 +240,17 @@ public class Player : MonoBehaviour
 
     void ColorChanger(Collider2D col)
     {
-        SetRandomColor();
+        Color particleCloor = SetRandomColor();
+        var colorOL = juice.colorOverLifetime;
+
+        Gradient grad = new Gradient();
+        grad.SetKeys(new GradientColorKey[] { new GradientColorKey(particleCloor, 0.0f), new GradientColorKey(new Color(200,255,192), 1.0f) }, 
+            new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(0.0f, 1.0f) });
+        colorOL.color = grad;
+
+        juice.Play();
         Destroy(col.gameObject);
-        colorSwitch.Play();
+        colorSwitch.Play();   
     }
 
     void SpawnPointEdge(Collider2D col)
@@ -316,7 +326,7 @@ public class Player : MonoBehaviour
         
     }
 
-    void SetRandomColor()
+    Color SetRandomColor()
     {
         index = Random.Range(0, 4);
         switch (index)
@@ -325,24 +335,27 @@ public class Player : MonoBehaviour
                 currentColor = "Cyan";
                 sr.color = colorCyan;
                 gameObject.tag = "Cyan";
+                return colorCyan;
 
-                break;
             case 1:
                 currentColor = "Yellow";
                 sr.color = colorYellow;
                 gameObject.tag = "Yellow";
-                break;
+                return colorYellow;
+
             case 2:
                 currentColor = "Magenta";
                 sr.color = colorMagenta;
                 gameObject.tag = "Magenta";
-                break;
+                return colorMagenta;
+
             case 3:
                 currentColor = "Pink";
                 sr.color = colorPink;
                 gameObject.tag = "Pink";
-                break;
+                return colorPink;
         }
+        return Color.red;
     }
 
     public void SetBuff(bool addBUff, PlayerState state, bool addHp, bool NormalTrigger, bool ignoreEnemy, bool canEat, bool playAnimation)

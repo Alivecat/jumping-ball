@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: b8abe6185b41a294584cb99b49dba316
-timeCreated: 1505303936
+guid: 1343dd6097b4fc940a988b68158f0f2b
+timeCreated: 1506226554
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: OutsideCircle_0
-    21300002: OutsideCircle_1
-    21300004: OutsideCircle_2
-    21300006: OutsideCircle_3
+    21300000: OutsideCirclenew_0
+    21300002: OutsideCirclenew_1
+    21300004: OutsideCirclenew_2
+    21300006: OutsideCirclenew_3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -75,11 +75,19 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: OutsideCircle_0
+      name: OutsideCirclenew_0
       rect:
         serializedVersion: 2
         x: 11
@@ -93,7 +101,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: OutsideCircle_1
+      name: OutsideCirclenew_1
       rect:
         serializedVersion: 2
         x: 287
@@ -107,12 +115,12 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: OutsideCircle_2
+      name: OutsideCirclenew_2
       rect:
         serializedVersion: 2
         x: 11
-        y: 8
-        width: 204
+        y: 7
+        width: 205
         height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -121,11 +129,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: OutsideCircle_3
+      name: OutsideCirclenew_3
       rect:
         serializedVersion: 2
         x: 287
-        y: 8
+        y: 7
         width: 204
         height: 204
       alignment: 0

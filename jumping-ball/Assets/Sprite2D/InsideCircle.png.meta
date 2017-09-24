@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: e42bd0d110f9b3249aa8130f120b8a87
-timeCreated: 1505303917
+guid: 409a1441e6e7fd940a0167cf40859e19
+timeCreated: 1506226515
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: InsideCircle_0
-    21300002: InsideCircle_1
-    21300004: InsideCircle_2
-    21300006: InsideCircle_3
+    21300000: "\u5185\u5708_0"
+    21300002: "\u5185\u5708_1"
+    21300004: "\u5185\u5708_2"
+    21300006: "\u5185\u5708_3"
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -75,11 +75,19 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: InsideCircle_0
+      name: "\u5185\u5708_0"
       rect:
         serializedVersion: 2
         x: 11
@@ -93,7 +101,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: InsideCircle_1
+      name: "\u5185\u5708_1"
       rect:
         serializedVersion: 2
         x: 287
@@ -107,12 +115,12 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: InsideCircle_2
+      name: "\u5185\u5708_2"
       rect:
         serializedVersion: 2
         x: 11
-        y: 8
-        width: 204
+        y: 7
+        width: 205
         height: 204
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -121,11 +129,11 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: InsideCircle_3
+      name: "\u5185\u5708_3"
       rect:
         serializedVersion: 2
         x: 287
-        y: 8
+        y: 7
         width: 204
         height: 204
       alignment: 0
