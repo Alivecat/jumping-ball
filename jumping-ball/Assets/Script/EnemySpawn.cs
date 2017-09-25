@@ -22,7 +22,9 @@ public class EnemySpawn : MonoBehaviour {
     public int max;
 
 	void Start () {
-		player = GameObject.Find("Player");
+        min = 0;
+        max = 4;
+        player = GameObject.Find("Player");
         //间隔spawnTimer时间生成小怪
         spawnTimer = 1f;
 	}

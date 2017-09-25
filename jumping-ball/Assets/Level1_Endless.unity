@@ -1324,6 +1324,21 @@ Prefab:
       propertyPath: GuiControl
       value: 
       objectReference: {fileID: 1033755443}
+    - target: {fileID: 198437491744127606, guid: 2f0d7cab6e33f8f4f896e1be4a34d80e,
+        type: 2}
+      propertyPath: InitialModule.maxNumParticles
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198437491744127606, guid: 2f0d7cab6e33f8f4f896e1be4a34d80e,
+        type: 2}
+      propertyPath: randomSeed
+      value: -1367421166
+      objectReference: {fileID: 0}
+    - target: {fileID: 199315196374354644, guid: 2f0d7cab6e33f8f4f896e1be4a34d80e,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f0d7cab6e33f8f4f896e1be4a34d80e, type: 2}
   m_IsPrefabParent: 0
@@ -1956,9 +1971,9 @@ RectTransform:
   m_Father: {fileID: 1313064502}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -184, y: 30}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 43, y: 30}
   m_SizeDelta: {x: 80, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1481871784

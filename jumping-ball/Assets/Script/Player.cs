@@ -119,6 +119,8 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
+#if UNITY_STANDALONE||UNITY_EDITOR||UNITY_WEBPLAYER
+
         if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
         {
             rb.velocity = Vector2.up * jumpForce;
@@ -126,8 +128,29 @@ public class Player : MonoBehaviour
             eyesAnimator.SetTrigger("isJump");   //Ã¯‘æ—€æ¶∂Øª≠
             jumpSound.Play();
         }
-    }
 
+#endif
+
+#if UNITY_ANDROID
+        if (Input.touchCount > 0)
+        {
+            Vector2 TouchLoc = Input.GetTouch(0).position;
+            TouchPhase TPhase = Input.GetTouch(0).phase;
+            if (TPhase.Equals(TouchPhase.Began))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(TouchLoc);
+                RaycastHit Hitinfo;
+                Physics.Raycast(ray, out Hitinfo);
+                Hitinfo.collider.gameObject.SendMessage("OnMouseDown");
+            }
+
+            rb.velocity = Vector2.up * jumpForce;
+            playerAnimator.SetTrigger("isJump"); //Ã¯‘æ…ÌÃÂ∂Øª≠
+            eyesAnimator.SetTrigger("isJump");   //Ã¯‘æ—€æ¶∂Øª≠
+            jumpSound.Play();
+        }
+#endif
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (GM.currentGameState != 0)
