@@ -34,11 +34,11 @@ public class Player : MonoBehaviour
     public Animator eyesAnimator;
     public GameObject eye;
     public GameObject eatPoint;
+    public GameObject sting;
     public SpriteRenderer bodySprite;
     public SpriteRenderer eyesSprite;
     public SpriteRenderer mouthSprite;
     public ParticleSystem juice;
-    public Sprite empty;
 
     [Space]
     public Color colorCyan;
@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
                 //人物状态机
                 switch (currentPlayerState)
                 {
+                    case PlayerState.Sting:
                     case PlayerState.Normal:
                         jump();
                         break;
@@ -96,6 +97,7 @@ public class Player : MonoBehaviour
                         }
 
                         break;
+
                     case PlayerState.SlowerCircle:
                         jump();
                         SetToNormalFunction();
@@ -129,7 +131,7 @@ public class Player : MonoBehaviour
     {
         if (GM.currentGameState != 0)
         {
-            //Normal状态
+            //Normal状态和SlowerCircle
             if (currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
             {
                 if (col.tag == "ColorChanger")
@@ -152,7 +154,7 @@ public class Player : MonoBehaviour
                     {
                         return;
                     }
-                    GameOver(2);
+                    GameOver(2,true);
                 }
             }
 
@@ -167,7 +169,7 @@ public class Player : MonoBehaviour
 
                 if (col.tag == "EdgeTrigger")
                 {
-                    GameOver(3);
+                    GameOver(3,true);
                     return;
                 }
 
@@ -205,7 +207,7 @@ public class Player : MonoBehaviour
 
                     if (col.tag == "EdgeTrigger")
                     {
-                        GameOver(4);
+                        GameOver(4,true);
                         return;
                     }
 
@@ -216,11 +218,29 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+            if(currentPlayerState == PlayerState.Sting)
+            {
+                if (col.tag == "EdgeTrigger")
+                {
+                    GameOver(5, true);
+                }
+
+                
+
+                //检测触发器物体后4个tag字母是否为nemy，判断是否为Enemy
+                //检测4个字母是为了不引发碰到tag短于5个字母引发的ArgumentOutOfRangeException
+                if (col.tag.Substring(col.tag.Length - 4, 4) == "nemy" || col.tag == "Boss")
+                {
+                    return;
+                }
+
+            }
+
 
         }
     }
 
-    public void GameOver(int i)
+    public void GameOver(int i,bool immediately = false)
     {
         if (currentPlayerState != PlayerState.penetration || currentPlayerState != PlayerState.Immortal)
         {
@@ -235,6 +255,12 @@ public class Player : MonoBehaviour
         {
             Debug.Log("gameover: " + i);
             GM.currentGameState = GameManager.GameState.gameover;
+            StartCoroutine(ReloadScene());
+        }
+
+        if (immediately)
+        {
+            Debug.Log("gameover: " + i);
             StartCoroutine(ReloadScene());
         }
     }
@@ -423,5 +449,10 @@ public class Player : MonoBehaviour
             playerAnimator.SetTrigger("isEatting");
         }
 
+    }
+
+    public void SetSting(bool set)
+    {
+        sting.gameObject.SetActive(set);
     }
 }

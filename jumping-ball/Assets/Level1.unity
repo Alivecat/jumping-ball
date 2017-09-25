@@ -530,6 +530,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &463537257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 463537258}
+  m_Layer: 0
+  m_Name: Spawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 8220585740371884164, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &463537258
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 463537257}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.59, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 763047682}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &479987023
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +853,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_Children:
   - {fileID: 1139392805}
+  - {fileID: 463537258}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -876,6 +905,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 10
   attackTime: 0
+  sting: {fileID: 1373458528}
+  BossEye: {fileID: 1139392806}
+  playerCom: {fileID: 2124206072}
 --- !u!1 &812084488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,6 +1103,7 @@ MonoBehaviour:
   currentGameState: 0
   player: {fileID: 2124206072}
   startButton: {fileID: 88499768}
+  bossObject: {fileID: 763047680}
   enemySpawn: {fileID: 1033755441}
   cloudSpawn: {fileID: 1033755442}
   colorChangerPointSpawnOffset: {x: 0, y: 8, z: 0}
@@ -2386,7 +2419,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1668535071
+  randomSeed: -1367421166
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6209,7 +6242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 7.5
-  currentPlayerState: 3
+  currentPlayerState: 0
   index: 0
   slowness: 10
   currentColor: 
@@ -6230,11 +6263,11 @@ MonoBehaviour:
   eyesAnimator: {fileID: 411798082}
   eye: {fileID: 411798079}
   eatPoint: {fileID: 1928061303}
+  sting: {fileID: 1373458528}
   bodySprite: {fileID: 2124206073}
   eyesSprite: {fileID: 411798081}
   mouthSprite: {fileID: 1831772060}
   juice: {fileID: 1835703159}
-  empty: {fileID: 0}
   colorCyan: {r: 0, g: 0.76470596, b: 0.91372555, a: 1}
   colorYellow: {r: 1, g: 0.8705883, b: 0.24705884, a: 1}
   colorMagenta: {r: 0.5686275, g: 0.027450982, b: 0.5176471, a: 1}

@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 
     public Player player;
     public GameObject startButton;
+    public GameObject bossObject;
     public EnemySpawn enemySpawn;
     public CloudSpawn cloudSpawn;
 
@@ -69,6 +70,7 @@ public class GameManager : MonoBehaviour {
         // 260高之后触发boss战
         if (spawnPoint.transform.position.y + spawnPointChangeOffset.y > 220f)
         {
+            bossObject.gameObject.SetActive(true);
             enemySpawn.min = 2;
             enemySpawn.max = 5;
             currentGameState = GameState.boss;

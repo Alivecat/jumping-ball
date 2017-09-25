@@ -22,7 +22,7 @@ public class PartOfColorCircle : MonoBehaviour {
         Physics2D.IgnoreCollision(thisCollider2D, eatPoint, true);
 
     }
-
+    /*
     private void Update()
     {
         if (playerCom.ReIgnoreCollisionTrigger)
@@ -32,5 +32,5 @@ public class PartOfColorCircle : MonoBehaviour {
             playerCom.ReIgnoreCollisionTrigger = false;
             Debug.Log("ReIgnoreCollisionTrigger");
         }
-    }
+    }*/
 }
