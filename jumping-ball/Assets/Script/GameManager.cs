@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+    public bool isEndless;
 
     public GameObject[] circleGroup;            //色环的预制体组
     [Space]
@@ -67,16 +68,20 @@ public class GameManager : MonoBehaviour {
 
     public void MoveSpawn(GameObject spawnPoint)
     {
-        // 260高之后触发boss战
-        if (spawnPoint.transform.position.y + spawnPointChangeOffset.y > 220f)
+        if (!isEndless)
         {
-            bossObject.gameObject.SetActive(true);
-            enemySpawn.min = 2;
-            enemySpawn.max = 5;
-            currentGameState = GameState.boss;
-            Debug.Log("start boss battle");
-            return;
+            // 260高之后触发boss战
+            if (spawnPoint.transform.position.y + spawnPointChangeOffset.y > 220f)
+            {
+                bossObject.gameObject.SetActive(true);
+                enemySpawn.min = 2;
+                enemySpawn.max = 5;
+                currentGameState = GameState.boss;
+                Debug.Log("start boss battle");
+                return;
+            }
         }
+        
         //将刷新点上移
         spawnPoint.transform.position = new Vector3(0f, spawnPoint.transform.position.y + spawnPointChangeOffset.y, spawnPoint.transform.position.z);
         InsObject(spawnPoint);

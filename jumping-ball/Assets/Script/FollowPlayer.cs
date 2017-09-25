@@ -6,7 +6,7 @@ public class FollowPlayer : MonoBehaviour {
     public float smoothing;
     public Vector3 targetPos;
     public bool fixation = false;
-
+    public GameManager gameManager;
 
     void FixedUpdate ()
 	{
@@ -18,15 +18,16 @@ public class FollowPlayer : MonoBehaviour {
                 transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
 
             }
-
-            if (player.position.y >= 230f)
-            {
-                targetPos = new Vector3(transform.position.x, 233f, transform.position.z);
-                transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
-            }
         }
 
-        if(transform.position.y >= 233)
+        if (player.position.y >= 230f && !gameManager.isEndless)
+        {
+            targetPos = new Vector3(transform.position.x, 233f, transform.position.z);
+            transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
+        }
+        
+
+        if(transform.position.y >= 233 && !gameManager.isEndless)
         {
             fixation = true;
         }

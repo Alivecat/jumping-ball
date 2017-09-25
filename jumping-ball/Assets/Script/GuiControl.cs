@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GuiControl : MonoBehaviour {
     public Text Score;
     public Text State;
 	public Slider HPbar;
 	public Player player;
-	public GameObject playerObj;
 	public Transform mainCameraTran;
-
+    public Button pauseButton;
+    public Image pauseMenu;
 
 	public float speed;
 
@@ -26,4 +27,25 @@ public class GuiControl : MonoBehaviour {
 
 	}
 
+    public void PauseButtonClick()
+    {
+        Time.timeScale = 0;
+        pauseMenu.gameObject.SetActive(true);
+        pauseButton.interactable = false;
+    }
+
+    public void ContinueButtonClick()
+    {
+        Time.timeScale = 1;
+        pauseMenu.gameObject.SetActive(false);
+        pauseButton.interactable = true;
+    }
+
+    public void ExitButtonClick()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("LevelSelect");
+    }
+
+    
 }

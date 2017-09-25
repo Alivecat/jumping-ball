@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     public AudioSource die;
     public Animator playerAnimator;
     public Animator eyesAnimator;
+
     public GameObject eye;
     public GameObject eatPoint;
     public GameObject sting;
@@ -77,16 +78,16 @@ public class Player : MonoBehaviour
                 {
                     case PlayerState.Sting:
                     case PlayerState.Normal:
-                        jump();
+                        Jump();
                         break;
 
                     case PlayerState.Immortal:
-                        jump();
+                        Jump();
                         SetToNormalFunction();
                         break;
 
                     case PlayerState.penetration:
-                        jump();
+                        Jump();
                         SetToNormalFunction();
 
                         curTime = Time.time;
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
                         break;
 
                     case PlayerState.SlowerCircle:
-                        jump();
+                        Jump();
                         SetToNormalFunction();
                         break;
                 }
@@ -116,7 +117,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void jump()
+    void Jump()
     {
         if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
         {
@@ -154,7 +155,8 @@ public class Player : MonoBehaviour
                     {
                         return;
                     }
-                    GameOver(2,true);
+
+                    GameOver(2,false);
                 }
             }
 

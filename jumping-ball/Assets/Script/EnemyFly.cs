@@ -13,11 +13,13 @@ public class EnemyFly : MonoBehaviour {
 	public GameObject eatPoint;
     public GameObject sting;
     public Animator animator;
+    public Animator mouthAnimator;
 
-	void Start(){
+
+    void Start(){
         smoothing = 5f;
         canDamage = true;
-
+        mouthAnimator = GameObject.Find("Mouth").GetComponent<Animator>();
         eatPoint = GameObject.Find ("EatPoint");       
         player = GameObject.Find("Player");  
         eye = GameObject.Find("eye");
@@ -163,7 +165,7 @@ public class EnemyFly : MonoBehaviour {
         //触发player吃东西动画
         if (playAnimation)
         {
-            playerCom.playerAnimator.SetTrigger("isEatting");
+            mouthAnimator.SetTrigger("isEating");
         }
         
     }
