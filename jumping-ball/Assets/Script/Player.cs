@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
                     return;
                 }
 
-                if (col.tag != currentColor || col.CompareTag("EdgeTrigger")) ;
+                if (col.tag != currentColor || col.CompareTag("EdgeTrigger")) 
                 {
                     if (col.CompareTag("SpawnPointEdge"))
                     {
