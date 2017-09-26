@@ -4,28 +4,37 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GuiControl : MonoBehaviour {
+public class GuiControl : MonoBehaviour
+{
     public Text Score;
     public Text State;
-	public Slider HPbar;
-	public Player player;
-	public Transform mainCameraTran;
+    public Slider HPbar;
+    public Player player;
+    public Transform mainCameraTran;
     public Button pauseButton;
     public Image pauseMenu;
 
-	public float speed;
+    public float speed;
 
-    void Start () {
-		mainCameraTran = GameObject.Find ("Main Camera").transform;
-		HPbar.value = player.HP;
-	}
+    void Start()
+    {
+        mainCameraTran = GameObject.Find("Main Camera").transform;
+        HPbar.value = player.HP;
+    }
 
 
-	void Update () {
-		HPbar.value = Mathf.Lerp(HPbar.value, player.HP/6f, speed * Time.deltaTime);
-		Score.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
+    void Update()
+    {
+        HPbar.value = Mathf.Lerp(HPbar.value, player.HP / 6f, speed * Time.deltaTime);
+        Score.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
 
-	}
+        if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
+        {
+            PauseButtonClick();
+        }
+
+
+    }
 
     public void PauseButtonClick()
     {
@@ -47,5 +56,4 @@ public class GuiControl : MonoBehaviour {
         SceneManager.LoadScene("LevelSelect");
     }
 
-    
 }

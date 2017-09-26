@@ -158,15 +158,15 @@ public class Player : MonoBehaviour
             //Normal状态和SlowerCircle
             if (currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
             {
-                if (col.tag == "ColorChanger")
+                if (col.CompareTag("ColorChanger"))
                 {
                     ColorChanger(col);
                     return;
                 }
 
-                if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                if (col.tag != currentColor || col.CompareTag("EdgeTrigger")) ;
                 {
-                    if (col.tag == "SpawnPointEdge")
+                    if (col.CompareTag("SpawnPointEdge"))
                     {
                         SpawnPointEdge(col);
                         return;
@@ -186,19 +186,19 @@ public class Player : MonoBehaviour
             //Immortal状态
             if (currentPlayerState == PlayerState.Immortal)
             {
-                if (col.tag == "ColorChanger")
+                if (col.CompareTag("ColorChanger"))
                 {
                     ColorChanger(col);
                     return;
                 }
 
-                if (col.tag == "EdgeTrigger")
+                if (col.CompareTag("EdgeTrigger"))
                 {
                     GameOver(3,true);
                     return;
                 }
 
-                if (col.tag == "SpawnPointEdge")
+                if (col.CompareTag("SpawnPointEdge"))
                 {
                     SpawnPointEdge(col);
                     return;
@@ -222,21 +222,21 @@ public class Player : MonoBehaviour
             {
 
 
-                if (col.tag != currentColor || col.tag == "EdgeTrigger")
+                if (col.tag != currentColor || col.CompareTag("EdgeTrigger"))
                 {
-                    if (col.tag == "ColorChanger")
+                    if (col.CompareTag("ColorChanger"))
                     {
                         ColorChanger(col);
                         return;
                     }
 
-                    if (col.tag == "EdgeTrigger")
+                    if (col.CompareTag("EdgeTrigger"))
                     {
                         GameOver(4,true);
                         return;
                     }
 
-                    if (col.tag == "SpawnPointEdge")
+                    if (col.CompareTag("SpawnPointEdge"))
                     {
                         SpawnPointEdge(col);
                         return;
@@ -245,7 +245,7 @@ public class Player : MonoBehaviour
             }
             if(currentPlayerState == PlayerState.Sting)
             {
-                if (col.tag == "EdgeTrigger")
+                if (col.CompareTag("EdgeTrigger"))
                 {
                     GameOver(5, true);
                 }
@@ -254,7 +254,7 @@ public class Player : MonoBehaviour
 
                 //检测触发器物体后4个tag字母是否为nemy，判断是否为Enemy
                 //检测4个字母是为了不引发碰到tag短于5个字母引发的ArgumentOutOfRangeException
-                if (col.tag.Substring(col.tag.Length - 4, 4) == "nemy" || col.tag == "Boss")
+                if (col.tag.Substring(col.tag.Length - 4, 4) == "nemy" || col.CompareTag("Boss"))
                 {
                     return;
                 }
