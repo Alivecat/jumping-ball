@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114459337301689702}
   - component: {fileID: 95925192705269756}
   - component: {fileID: 58090077920587656}
+  - component: {fileID: 50686487160222622}
   m_Layer: 8
   m_Name: SlowMotionEnemy-L
   m_TagString: SlowMotionEnemy
@@ -65,13 +66,33 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1009607569145610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.352897, y: -14.36382, z: -33.157093}
+  m_LocalPosition: {x: -2.120924, y: -14.27539, z: -32}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 4360416424664532}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50686487160222622
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1009607569145610}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &58090077920587656
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -124,6 +145,7 @@ MonoBehaviour:
   eatPoint: {fileID: 0}
   sting: {fileID: 0}
   animator: {fileID: 0}
+  mouthAnimator: {fileID: 0}
 --- !u!212 &212329990581948540
 SpriteRenderer:
   m_ObjectHideFlags: 1

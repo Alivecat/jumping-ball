@@ -20,14 +20,14 @@ public class FollowPlayer : MonoBehaviour {
             }
         }
 
-        if (player.position.y >= 230f && !gameManager.isEndless)
+        if (player.position.y >= 230f && !GameManager.isEndless)
         {
             targetPos = new Vector3(transform.position.x, 233f, transform.position.z);
             transform.position = Vector3.Lerp(transform.position, targetPos, smoothing * Time.deltaTime);
         }
         
 
-        if(transform.position.y >= 233 && !gameManager.isEndless)
+        if(transform.position.y >= 233 && !GameManager.isEndless)
         {
             fixation = true;
         }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//尝试动态挂载脚本
+
 public class GameManager : MonoBehaviour {
-    public bool isEndless;
+    static public bool isEndless;
 
     public GameObject[] circleGroup;            //色环的预制体组
     [Space]
@@ -20,16 +22,29 @@ public class GameManager : MonoBehaviour {
     public enum GameState { gameover, playing, boss };    //游戏状态
     public GameState currentGameState;
 
-    public Player player;
+    public Player playerCom;
+    public GameObject player;
+    public GameObject SpawnPoint1;
+    public GameObject SpawnPoint2;
+    public GameObject SpawnPoint3;
+    public GameObject MainCamera;
+    public FollowPlayer followPlayer;
+
     public GameObject startButton;
     public GameObject bossObject;
     public EnemySpawn enemySpawn;
     public CloudSpawn cloudSpawn;
+    public Text modeTitle;
 
     public Vector3 colorChangerPointSpawnOffset = new Vector3(0f, 3.5f, 0f);    //颜色切换点间距   
     public Vector3 spawnPointChangeOffset = new Vector3(0f, 21f, 0f);           //刷新点切换间距
 
+    
+
     void Start () {
+        if (isEndless) {
+            modeTitle.gameObject.SetActive(true);
+        }
         SpawnCircle(); 
     }
 
@@ -37,7 +52,7 @@ public class GameManager : MonoBehaviour {
     {
         startButton.SetActive(false);
         currentGameState = GameState.playing;
-        player.rb.gravityScale = 2;
+        playerCom.rb.gravityScale = 2;
         enemySpawn.StartCoroutine(enemySpawn.InsEnemy());
         cloudSpawn.StartCoroutine(cloudSpawn.InsCloud());
     }
@@ -133,8 +148,8 @@ public class GameManager : MonoBehaviour {
                     }
                 }
             
-            }
         }
-			
     }
+			
+}
 

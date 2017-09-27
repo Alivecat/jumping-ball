@@ -13,6 +13,8 @@ public class EnemySpawn : MonoBehaviour {
 	public GameObject currentEnemy;
 	public GameObject player;
 
+    public Pool pool;
+
 	public Vector3 SpawnLoc;
 	public int L_Or_R;
 	public Vector3 pos;
@@ -35,15 +37,18 @@ public class EnemySpawn : MonoBehaviour {
         if (L_Or_R == 0) {	
 			pos = L_EnemySpawnPoint.transform.position;
 			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-1, 8), pos.z);
-            
-            currentEnemy = Instantiate(Enemy_L[RandomIndex(min,max)], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
 
+            //currentEnemy = Instantiate(Enemy_L[RandomIndex(min,max)], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+
+            currentEnemy = pool.Get(Enemy_L[RandomIndex(min, max)].name, SpawnLoc, Quaternion.identity);
             currentEnemy.transform.Find("tag").tag = "L_enemy";
 		} else {
 			pos = R_EnemySpawnPoint.transform.position;
 			SpawnLoc = new Vector3 (pos.x, pos.y + Random.Range (-8, 8), pos.z);
-            
-            currentEnemy = Instantiate (Enemy_R[RandomIndex(min,max)], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+
+            //currentEnemy = Instantiate (Enemy_R[RandomIndex(min,max)], SpawnLoc, L_EnemySpawnPoint.transform.rotation);
+
+            currentEnemy = pool.Get(Enemy_R[RandomIndex(min, max)].name, SpawnLoc, Quaternion.identity);
             currentEnemy.transform.Find("tag").tag = "R_enemy";
             
         }

@@ -6,9 +6,11 @@ public class EnemyFly : MonoBehaviour {
 	public float speed;
     public bool canDamage;
     public float smoothing;
+    public Vector3 NormalScale;
 
     public GameObject player;
     public Player playerCom;
+    public Pool pool;
     public GameObject eye;
 	public GameObject eatPoint;
     public GameObject sting;
@@ -17,6 +19,7 @@ public class EnemyFly : MonoBehaviour {
 
 
     void Start(){
+        NormalScale = gameObject.transform.localScale;
         smoothing = 5f;
         canDamage = true;
         mouthAnimator = GameObject.Find("Mouth").GetComponent<Animator>();
@@ -24,9 +27,10 @@ public class EnemyFly : MonoBehaviour {
         player = GameObject.Find("Player");  
         eye = GameObject.Find("eye");
         sting = GameObject.Find("Sting");
+        pool = GameObject.Find("GameManager").GetComponent<Pool>();
         animator = gameObject.GetComponent<Animator>();
         playerCom = player.GetComponent<Player>();
-        StartCoroutine (EnemyDie());
+        //StartCoroutine (EnemyDie());
 	}
 
 	void Update () {
@@ -113,20 +117,28 @@ public class EnemyFly : MonoBehaviour {
 
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == "EnemyColliderSpace")
+        {
+
+            pool.Return(this.transform.gameObject);
+        }
+        
+    }
+
     IEnumerator EnemyDie(float dieTime = 10f)
     {
         yield return new WaitForSeconds(dieTime);
-        GameObject.Destroy(gameObject);
+        //GameObject.Destroy(gameObject);
+        canDamage = true;
+        gameObject.transform.localScale = NormalScale;
+        pool.Return(this.transform.gameObject);
     }
-
-    /*bool isStatePOrI(){
-		return playerCom.currentPlayerState == Player.PlayerState.penetration
-		|| playerCom.currentPlayerState == Player.PlayerState.Immortal;
-	}*/
 
     public void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool SetNormal, bool playAnimation)
     {
-        playerCom.ReIgnoreCollisionTrigger = true;
+        //playerCom.ReIgnoreCollisionTrigger = true;
 
         if (addBUff)
         {   //切换player当前状态

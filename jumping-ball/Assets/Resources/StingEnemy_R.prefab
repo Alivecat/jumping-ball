@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1606206918009884}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.639107, y: 234.00024, z: -35}
+  m_LocalPosition: {x: 0.37053156, y: -16.22184, z: -32}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 4455882628570004}
@@ -124,6 +124,7 @@ MonoBehaviour:
   eatPoint: {fileID: 0}
   sting: {fileID: 0}
   animator: {fileID: 0}
+  mouthAnimator: {fileID: 0}
 --- !u!212 &212534309671648238
 SpriteRenderer:
   m_ObjectHideFlags: 1

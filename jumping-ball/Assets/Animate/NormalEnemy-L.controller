@@ -27,7 +27,7 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
---- !u!1101 &1101390311702391252
+--- !u!1101 &1101695498547769988
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -38,7 +38,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isDie
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 1102653527617844854}
+  m_DstState: {fileID: 1102980992949546744}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
@@ -74,13 +74,13 @@ AnimatorState:
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
---- !u!1102 &1102653527617844854
+--- !u!1102 &1102980992949546744
 AnimatorState:
   serializedVersion: 5
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: EnemyDie
+  m_Name: NormalEnemyDie
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -92,7 +92,7 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 00f708eb9d7bd5941b29e80df726de7b, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5926a8478388adc489f697f1b76f0291, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -109,11 +109,11 @@ AnimatorStateMachine:
     m_State: {fileID: 1102649331932358702}
     m_Position: {x: 36, y: 192, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 1102653527617844854}
-    m_Position: {x: 24, y: -72, z: 0}
+    m_State: {fileID: 1102980992949546744}
+    m_Position: {x: 48, y: -96, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
-  - {fileID: 1101390311702391252}
+  - {fileID: 1101695498547769988}
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []

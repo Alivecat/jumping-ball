@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public float slowness = 10f;        //死亡时慢动作速率
     public string currentColor;
     public bool setToNormalTrigger;
-    public bool ReIgnoreCollisionTrigger;
     public float buffTime;
     public int HP;
     public float timeSpentInvincible;
@@ -47,18 +46,18 @@ public class Player : MonoBehaviour
     public Color colorMagenta;
     public Color colorPink;
 
-    private float lastTime;
+    public float lastTime;
     private float curTime;
-    private float blinkCountI;
+    public float blinkCountI;
     void Start()
     {
-        ReIgnoreCollisionTrigger = false;
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), GameObject.Find("ColliderSpace").GetComponent<Collider2D>(), true);
         lastTime = Time.time;
         HP = 6;
         blinkCountI = 0;
         setToNormalTrigger = false;
-        GM.RotateDoubleCircle(index);
         SetRandomColor();
+        GM.RotateDoubleCircle(index);
         GM.currentGameState = 0;
     }
 
@@ -153,8 +152,10 @@ public class Player : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D col)
     {
+
         if (GM.currentGameState != 0)
         {
+            
             //Normal状态和SlowerCircle
             if (currentPlayerState == PlayerState.Normal || currentPlayerState == PlayerState.SlowerCircle)
             {
@@ -175,6 +176,11 @@ public class Player : MonoBehaviour
                     //检测触发器物体后4个tag字母是否为nemy，判断是否为Enemy
                     //检测4个字母是为了不引发碰到tag短于5个字母引发的ArgumentOutOfRangeException
                     if (col.tag.Substring(col.tag.Length - 4, 4) == "nemy")
+                    {
+                        return;
+                    }
+
+                    if (col.CompareTag("EnemyColliderSpace"))
                     {
                         return;
                     }
@@ -215,6 +221,10 @@ public class Player : MonoBehaviour
                     }
                 }
 
+                if (col.CompareTag("EnemyColliderSpace"))
+                {
+                    return;
+                }
             }
 
             //穿越模式
@@ -241,6 +251,11 @@ public class Player : MonoBehaviour
                         SpawnPointEdge(col);
                         return;
                     }
+
+                    if (col.CompareTag("EnemyColliderSpace"))
+                    {
+                        return;
+                    }
                 }
             }
             if(currentPlayerState == PlayerState.Sting)
@@ -250,7 +265,10 @@ public class Player : MonoBehaviour
                     GameOver(5, true);
                 }
 
-                
+                if (col.CompareTag("EnemyColliderSpace")) 
+                {
+                    return;
+                }
 
                 //检测触发器物体后4个tag字母是否为nemy，判断是否为Enemy
                 //检测4个字母是为了不引发碰到tag短于5个字母引发的ArgumentOutOfRangeException
@@ -274,7 +292,6 @@ public class Player : MonoBehaviour
         }
 
         SetBuff(true, PlayerState.penetration, false, true, true, false, false);
-        ReIgnoreCollisionTrigger = true;
 
         if (HP <= 0)
         {
@@ -286,6 +303,7 @@ public class Player : MonoBehaviour
         if (immediately)
         {
             Debug.Log("gameover: " + i);
+            GM.currentGameState = GameManager.GameState.gameover;
             StartCoroutine(ReloadScene());
         }
     }
@@ -340,6 +358,7 @@ public class Player : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //GM.RestartScence();
     }
 
     IEnumerator SetToNormal(float buffTime = 6f)
@@ -390,7 +409,7 @@ public class Player : MonoBehaviour
         
     }
 
-    Color SetRandomColor()
+    public Color SetRandomColor()
     {
         index = Random.Range(0, 4);
         switch (index)

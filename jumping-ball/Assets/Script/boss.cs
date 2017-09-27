@@ -25,6 +25,11 @@ public class boss : MonoBehaviour {
             playerCom.setToNormalTrigger = true;
             StartCoroutine(closeEye());
         }
+
+        if(HP <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     IEnumerator closeEye()

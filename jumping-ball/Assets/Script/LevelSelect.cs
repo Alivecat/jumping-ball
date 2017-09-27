@@ -7,12 +7,14 @@ public class LevelSelect : MonoBehaviour {
 
     public void SelectLevel1()
     {
+        GameManager.isEndless = false;
         SceneManager.LoadScene("Level1");
     }
 
     public void SelectLevel1Endless()
     {
-        SceneManager.LoadScene("Level1_Endless");
+        GameManager.isEndless = true;
+        SceneManager.LoadScene("Level1");
     }
 
     public void LevelSelectExitButtonClick()

@@ -32,6 +32,7 @@ TagManager:
   - Boss
   - Sting
   - thorn
+  - EnemyColliderSpace
   layers:
   - Default
   - TransparentFX
