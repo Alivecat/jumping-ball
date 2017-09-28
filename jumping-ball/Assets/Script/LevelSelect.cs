@@ -19,6 +19,7 @@ public class LevelSelect : MonoBehaviour {
 
     public void LevelSelectExitButtonClick()
     {
+        GameManager.isEndless = false;
         SceneManager.LoadScene("MainMenu");
     }
 

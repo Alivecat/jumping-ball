@@ -14,8 +14,9 @@ public class EnemyFly : MonoBehaviour {
     public GameObject eye;
 	public GameObject eatPoint;
     public GameObject sting;
-    public Animator animator;
+    public Animator enemyanimator;
     public Animator mouthAnimator;
+    public Animator playerAnimator;
 
 
     void Start(){
@@ -28,9 +29,10 @@ public class EnemyFly : MonoBehaviour {
         eye = GameObject.Find("eye");
         sting = GameObject.Find("Sting");
         pool = GameObject.Find("GameManager").GetComponent<Pool>();
-        animator = gameObject.GetComponent<Animator>();
+        enemyanimator = gameObject.GetComponent<Animator>();
+        playerAnimator = GameObject.Find("Player").GetComponent<Animator>();
         playerCom = player.GetComponent<Player>();
-        //StartCoroutine (EnemyDie());
+
 	}
 
 	void Update () {
@@ -68,15 +70,15 @@ public class EnemyFly : MonoBehaviour {
             {
                 
                 speed = 0;
-                animator.SetTrigger("isDie");
-                StartCoroutine(EnemyDie(1f));
+                enemyanimator.SetTrigger("isDie");
+                StartCoroutine(EnemyDie(0.5f));
             }
 
             if (canDamage && playerCom.currentPlayerState != Player.PlayerState.Immortal)
             {
                 playerCom.GameOver(1);
-                SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true, false);
-
+                SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true);
+                SetAnimation(true, false, false, false);
             }
             
 
@@ -86,7 +88,7 @@ public class EnemyFly : MonoBehaviour {
         {
 
             canDamage = false; //怪物是否可造成伤害
-			animator.SetTrigger("isDie");
+            enemyanimator.SetTrigger("isDie");
 			StartCoroutine(EnemyDie(0.5f));
 			speed = 1f; // 死亡小怪减速飞入嘴中
 
@@ -94,21 +96,23 @@ public class EnemyFly : MonoBehaviour {
             {
                 //bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool playAnimation
                 case "ImmortalEnemy":
-                    SetBuff(true, Player.PlayerState.Immortal, false, true, false, false, true, true);
+                    SetBuff(true, Player.PlayerState.Immortal, false, true, false, false, true);
+                    SetAnimation(true, true, true, false);
                     break;
                 case "NormalEnemy":
-                    SetBuff(false, Player.PlayerState.Normal, true, false, false, true, true, true);
+                    SetBuff(false, Player.PlayerState.Normal, true, false, false, true, true);
                     break;
                 case "PenetrationEnemy":
-                    SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true, true);
                     playerCom.enemyBuffP = true;
+                    SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true);
                     break;
                 case "SlowMotionEnemy":
-                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true, true, true);
+                    SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true, true);
                     break;
                 case "StingEnemy":
-                    SetBuff(true, Player.PlayerState.Sting, false, true, false, false, false, true);
                     playerCom.SetSting(true);
+                    SetAnimation(true, false, true, true);
+                    SetBuff(true, Player.PlayerState.Sting, false, true, false, false, false);
                     break;
             }
             
@@ -132,11 +136,12 @@ public class EnemyFly : MonoBehaviour {
         yield return new WaitForSeconds(dieTime);
         //GameObject.Destroy(gameObject);
         canDamage = true;
+        speed = 5;
         gameObject.transform.localScale = NormalScale;
         pool.Return(this.transform.gameObject);
     }
 
-    public void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool SetNormal, bool playAnimation)
+    public void SetBuff(bool addBUff, Player.PlayerState state, bool addHp, bool NormalTrigger,bool ignoreEnemy,bool canEat,bool SetNormal)
     {
         //playerCom.ReIgnoreCollisionTrigger = true;
 
@@ -164,7 +169,9 @@ public class EnemyFly : MonoBehaviour {
         //是否可以吃怪 canEat == true 时可以吃
         if (!canEat)
         {
-            GameObject.Destroy(eatPoint.GetComponent<BoxCollider2D>());
+
+            eatPoint.gameObject.SetActive(false);
+            Debug.Log("Destroy eatPoint BoxCollider2D");
         }
 
         //是否需要恢复默认状态
@@ -172,16 +179,34 @@ public class EnemyFly : MonoBehaviour {
         {
             playerCom.setToNormalTrigger = NormalTrigger;
         }
-        
 
+    }
+
+    void SetAnimation(bool eatAnimation,bool ironAnimation,bool setLikeNormalfalse,bool stingAnimation)
+    {
         //触发player吃东西动画
-        if (playAnimation)
+        if (eatAnimation)
         {
             mouthAnimator.SetTrigger("isEating");
         }
+
+        if (ironAnimation)
+        {
+            playerAnimator.SetBool("isIron", true);
+        }
+
+        if (setLikeNormalfalse)
+        {
+            playerAnimator.SetBool("likeNormal", false);
+        }
+
+        if (stingAnimation)
+        {
+            playerAnimator.SetBool("isSting", true);
+        }
         
     }
-
+        
 
 
 }

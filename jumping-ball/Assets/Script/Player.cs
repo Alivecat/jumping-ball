@@ -297,12 +297,14 @@ public class Player : MonoBehaviour
         {
             Debug.Log("gameover: " + i);
             GM.currentGameState = GameManager.GameState.gameover;
+            eatPoint.SetActive(false);
             StartCoroutine(ReloadScene());
         }
 
         if (immediately)
         {
             Debug.Log("gameover: " + i);
+            eatPoint.SetActive(false);
             GM.currentGameState = GameManager.GameState.gameover;
             StartCoroutine(ReloadScene());
         }
@@ -358,10 +360,10 @@ public class Player : MonoBehaviour
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //GM.RestartScence();
+        
     }
 
-    IEnumerator SetToNormal(float buffTime = 6f)
+    public IEnumerator SetToNormal(float buffTime = 6f)
     {
         yield return new WaitForSeconds(buffTime);
         currentPlayerState = PlayerState.Normal;
@@ -371,11 +373,13 @@ public class Player : MonoBehaviour
         {
             eye.tag = "Player";
         }
-        if (eatPoint.GetComponent<BoxCollider2D>() == false)
+        if (eatPoint.gameObject.activeSelf == false)
         {
-            eatPoint.AddComponent<BoxCollider2D>().isTrigger = true;
-            
+            eatPoint.gameObject.SetActive(true);
         }
+        playerAnimator.SetBool("isIron", false);
+        playerAnimator.SetBool("isSting", false);
+        playerAnimator.SetBool("likeNormal", true);
         bodySprite.sortingOrder = 10;
         eyesSprite.sortingOrder = 12;
         mouthSprite.sortingOrder = 13;
@@ -481,7 +485,8 @@ public class Player : MonoBehaviour
 
         if (!canEat)
         {
-            GameObject.Destroy(eatPoint.GetComponent<BoxCollider2D>());
+            
+            eatPoint.gameObject.SetActive(false);
         }
 
         //»Ö¸´Ä¬ÈÏ×´Ì¬

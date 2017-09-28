@@ -22,7 +22,7 @@ public class boss : MonoBehaviour {
         {
             HP--;
             sting.gameObject.SetActive(false);
-            playerCom.setToNormalTrigger = true;
+            StartCoroutine(playerCom.SetToNormal(0f));
             StartCoroutine(closeEye());
         }
 
