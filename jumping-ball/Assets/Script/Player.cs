@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     public int HP;
     public float timeSpentInvincible;
     public bool enemyBuffP;
+    public bool damaged = false;         //触发受伤屏幕闪烁
+    public bool slowMotionClock = false; //触发慢动作时间表盘
 
     public Rigidbody2D rb;
     public SpriteRenderer sr;
@@ -292,6 +294,7 @@ public class Player : MonoBehaviour
 
     public void GameOver(int i,bool immediately = false)
     {
+        damaged = true;
         if (currentPlayerState != PlayerState.penetration || currentPlayerState != PlayerState.Immortal)
         {
             Debug.Log("-HP");
@@ -365,6 +368,7 @@ public class Player : MonoBehaviour
         Time.fixedDeltaTime = Time.fixedDeltaTime / slowness;
         bodySprite.color = new Color(255f, 255f, 255, 0f);
         eyesSprite.color = new Color(255f, 255f, 255, 0f);
+        GuiControl.SetHighSocre();
         yield return new WaitForSeconds(4f / slowness);
         Time.timeScale = 1f;
         Time.fixedDeltaTime = Time.fixedDeltaTime * slowness;
@@ -387,6 +391,7 @@ public class Player : MonoBehaviour
             eatPoint.AddComponent<BoxCollider2D>().isTrigger = true;
             //eatPoint.gameObject.SetActive(true);
         }
+        slowMotionClock = false;
         playerAnimator.SetBool("isIron", false);
         playerAnimator.SetBool("isSting", false);
         playerAnimator.SetBool("likeNormal", true);

@@ -14,11 +14,21 @@ public class GuiControl : MonoBehaviour
     public Transform mainCameraTran;
     public Button pauseButton;
     public Image pauseMenu;
+    public Image damage_Image;
+    public Color flash_Color;
 
+    public Image Clock_Image;
+    public Color Clock_Color;
+
+    public float flash_Speed = 5;
+    bool playerDamaged;
+    bool playerClock;
     public float speed;
+
 
     void Start()
     {
+        
         mainCameraTran = GameObject.Find("Main Camera").transform;
         HPbar.value = player.HP;
     }
@@ -28,7 +38,8 @@ public class GuiControl : MonoBehaviour
     {
         HPbar.value = Mathf.Lerp(HPbar.value, player.HP / 6f, speed * Time.deltaTime);
         Score.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
-        PauseScore.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
+        PauseScore.text = PlayerPrefs.GetString("highscore") + " M";
+
         if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
         {
             PauseButtonClick();
@@ -38,6 +49,11 @@ public class GuiControl : MonoBehaviour
         {
             PauseButtonClick();
         }
+
+        playerDamaged = player.damaged;
+        playerClock = player.slowMotionClock;
+        PlayImageEffect(false, damage_Image, flash_Color, Color.clear,playerDamaged);
+        PlayImageEffect(true, Clock_Image, Clock_Color, new Color(0f,248f,217f,0f), playerClock);
 
     }
 
@@ -61,4 +77,37 @@ public class GuiControl : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
     }
 
+    public void PlayImageEffect(bool isFluency, Image targetImage, Color targetColor, Color EndColor, bool trigger)
+    {
+        if (!isFluency && trigger)
+        {
+            targetImage.color = targetColor;
+        }
+
+        if(isFluency && trigger)
+        {
+            targetImage.color = Color.Lerp(targetImage.color, targetColor, flash_Speed * Time.deltaTime);
+        }
+        else
+        {
+            targetImage.color = Color.Lerp(targetImage.color, EndColor, flash_Speed * Time.deltaTime);
+        }
+        if(player.damaged == true)
+        {
+            player.damaged = false;
+        }
+        
+    }
+    //储存最高分
+    public void SetHighSocre()
+    {
+       // bool result = mainCameraTran.position.y > float(PlayerPrefs.GetString("highscore"))
+
+        if (GameManager.isEndless == true && result)
+        {
+            Debug.Log(result);
+            PlayerPrefs.SetString("highscore", (mainCameraTran.position.y * 0.25f).ToString("F2"));
+        }
+        
+    }
 }

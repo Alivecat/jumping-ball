@@ -110,6 +110,7 @@ public class EnemyFly : MonoBehaviour {
                 case "SlowMotionEnemy":
                     SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true, true);
                     SetAnimation(true, false, false, false);
+                    playerCom.slowMotionClock = true;
                     break;
                 case "StingEnemy":
                     playerCom.SetSting(true);
@@ -189,7 +190,6 @@ public class EnemyFly : MonoBehaviour {
         //触发player吃东西动画
         if (eatAnimation)
         {
-            Debug.Log("SetTrigger(isEating)");
             mouthAnimator.SetTrigger("isEating");
         }
 
