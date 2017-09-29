@@ -135,19 +135,26 @@ public class Player : MonoBehaviour
         {
             Vector2 TouchLoc = Input.GetTouch(0).position;
             TouchPhase TPhase = Input.GetTouch(0).phase;
+            RaycastHit Hitinfo;
             if (TPhase.Equals(TouchPhase.Began))
             {
                 Ray ray = Camera.main.ScreenPointToRay(TouchLoc);
-                RaycastHit Hitinfo;
                 Physics.Raycast(ray, out Hitinfo);
                 Hitinfo.collider.gameObject.SendMessage("OnMouseDown");
             }
 
-            rb.velocity = Vector2.up * jumpForce;
-            playerAnimator.SetTrigger("isJump"); //ÌøÔ¾ÉíÌå¶¯»­
-            eyesAnimator.SetTrigger("isJump");   //ÌøÔ¾ÑÛ¾¦¶¯»­
-            jumpSound.Play();
+            if(Time.timeScale != 0)
+            {
+                rb.velocity = Vector2.up * jumpForce;
+                playerAnimator.SetTrigger("isJump"); //ÌøÔ¾ÉíÌå¶¯»­
+                eyesAnimator.SetTrigger("isJump");   //ÌøÔ¾ÑÛ¾¦¶¯»­
+                jumpSound.Play();
+            }
+ 
         }
+
+        
+
 #endif
     }
     void OnTriggerEnter2D(Collider2D col)
@@ -297,14 +304,16 @@ public class Player : MonoBehaviour
         {
             Debug.Log("gameover: " + i);
             GM.currentGameState = GameManager.GameState.gameover;
-            eatPoint.SetActive(false);
+            GameObject.Destroy(eatPoint.GetComponent<Collider2D>());
+            //eatPoint.SetActive(false);
             StartCoroutine(ReloadScene());
         }
 
         if (immediately)
         {
             Debug.Log("gameover: " + i);
-            eatPoint.SetActive(false);
+            GameObject.Destroy(eatPoint.GetComponent<Collider2D>());
+            //eatPoint.SetActive(false);
             GM.currentGameState = GameManager.GameState.gameover;
             StartCoroutine(ReloadScene());
         }
@@ -373,9 +382,10 @@ public class Player : MonoBehaviour
         {
             eye.tag = "Player";
         }
-        if (eatPoint.gameObject.activeSelf == false)
+        if (eatPoint.GetComponent<BoxCollider2D>() == false) //eatPoint.gameObject.activeSelf == false
         {
-            eatPoint.gameObject.SetActive(true);
+            eatPoint.AddComponent<BoxCollider2D>().isTrigger = true;
+            //eatPoint.gameObject.SetActive(true);
         }
         playerAnimator.SetBool("isIron", false);
         playerAnimator.SetBool("isSting", false);
@@ -485,8 +495,8 @@ public class Player : MonoBehaviour
 
         if (!canEat)
         {
-            
-            eatPoint.gameObject.SetActive(false);
+            GameObject.Destroy(eatPoint.GetComponent<Collider2D>());
+            //eatPoint.gameObject.SetActive(false);
         }
 
         //»Ö¸´Ä¬ÈÏ×´Ì¬

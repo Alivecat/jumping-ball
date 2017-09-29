@@ -23,7 +23,7 @@ public class EnemyFly : MonoBehaviour {
         NormalScale = gameObject.transform.localScale;
         smoothing = 5f;
         canDamage = true;
-        mouthAnimator = GameObject.Find("Mouth").GetComponent<Animator>();
+        mouthAnimator = GameObject.FindGameObjectWithTag("Mouth").GetComponent<Animator>();
         eatPoint = GameObject.Find ("EatPoint");       
         player = GameObject.Find("Player");  
         eye = GameObject.Find("eye");
@@ -78,7 +78,6 @@ public class EnemyFly : MonoBehaviour {
             {
                 playerCom.GameOver(1);
                 SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true);
-                SetAnimation(true, false, false, false);
             }
             
 
@@ -101,13 +100,16 @@ public class EnemyFly : MonoBehaviour {
                     break;
                 case "NormalEnemy":
                     SetBuff(false, Player.PlayerState.Normal, true, false, false, true, true);
+                    SetAnimation(true, false, false, false);
                     break;
                 case "PenetrationEnemy":
-                    playerCom.enemyBuffP = true;
+                    playerCom.enemyBuffP = true; //切换主角闪烁
                     SetBuff(true, Player.PlayerState.penetration, false, true, true, false, true);
+                    SetAnimation(true, false, false, false);
                     break;
                 case "SlowMotionEnemy":
                     SetBuff(true, Player.PlayerState.SlowerCircle, false, true, false, true, true);
+                    SetAnimation(true, false, false, false);
                     break;
                 case "StingEnemy":
                     playerCom.SetSting(true);
@@ -169,9 +171,9 @@ public class EnemyFly : MonoBehaviour {
         //是否可以吃怪 canEat == true 时可以吃
         if (!canEat)
         {
-
-            eatPoint.gameObject.SetActive(false);
-            Debug.Log("Destroy eatPoint BoxCollider2D");
+            //eatPoint.gameObject.SetActive(false);
+            GameObject.Destroy(eatPoint.GetComponent<Collider2D>());
+            //Debug.Log("Destroy eatPoint BoxCollider2D");
         }
 
         //是否需要恢复默认状态
@@ -187,6 +189,7 @@ public class EnemyFly : MonoBehaviour {
         //触发player吃东西动画
         if (eatAnimation)
         {
+            Debug.Log("SetTrigger(isEating)");
             mouthAnimator.SetTrigger("isEating");
         }
 

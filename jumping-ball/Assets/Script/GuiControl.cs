@@ -8,6 +8,7 @@ public class GuiControl : MonoBehaviour
 {
     public Text Score;
     public Text State;
+    public Text PauseScore;
     public Slider HPbar;
     public Player player;
     public Transform mainCameraTran;
@@ -27,12 +28,16 @@ public class GuiControl : MonoBehaviour
     {
         HPbar.value = Mathf.Lerp(HPbar.value, player.HP / 6f, speed * Time.deltaTime);
         Score.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
-
+        PauseScore.text = (mainCameraTran.position.y * 0.25f).ToString("F2") + " M";
         if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Escape)))
         {
             PauseButtonClick();
         }
 
+        if (Application.platform == RuntimePlatform.Android && (Input.GetKeyDown(KeyCode.Home)))
+        {
+            PauseButtonClick();
+        }
 
     }
 
