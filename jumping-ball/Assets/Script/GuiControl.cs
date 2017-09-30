@@ -28,7 +28,10 @@ public class GuiControl : MonoBehaviour
 
     void Start()
     {
-        
+        if (PlayerPrefs.GetString("highscore") == "")
+        {
+            PlayerPrefs.SetString("highscore", "0.00");
+        }
         mainCameraTran = GameObject.Find("Main Camera").transform;
         HPbar.value = player.HP;
     }
@@ -101,7 +104,7 @@ public class GuiControl : MonoBehaviour
     //储存最高分
     public void SetHighSocre()
     {
-       // bool result = mainCameraTran.position.y > float(PlayerPrefs.GetString("highscore"))
+        bool result = (mainCameraTran.position.y * 0.25f) > float.Parse(PlayerPrefs.GetString("highscore"));
 
         if (GameManager.isEndless == true && result)
         {

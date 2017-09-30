@@ -19,11 +19,6 @@ public class MenuStartButton : MonoBehaviour {
         SceneManager.LoadScene("LevelSelect");
     }
 
-    public void ShowStartButton()
-    {
-        button.SetTrigger("ShowStartButton");
-    }
-
     private void Start()
     {
         originalColor = Show.color;
@@ -60,11 +55,6 @@ public class MenuStartButton : MonoBehaviour {
                 startFadingTimep = 0;
                 fading = false;
             }
-        }
-
-        if(Input.touchCount == 3)
-        {
-            ShowStartButton();
         }
 
     }
